@@ -1,0 +1,31 @@
+{
+    "name": "php-mock/phpunit",
+    "type": "library",
+    "description": "Mock built-in PHP functions (e.g. time()) with PHPUnit. This package relies on PHP's namespace fallback policy. No further extension is needed.",
+    "keywords": ["phpunit", "mock", "stub", "test double", "function", "test", "TDD", "BDD"],
+    "homepage": "https://github.com/php-mock/phpunit",
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "Markus Malkusch",
+            "email": "markus@malkusch.de",
+            "homepage": "http://markus.malkusch.de",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"phpmock\\phpunit\\": "classes/"}
+    },
+    "require": {
+        "php": ">=5.4",
+        "phpunit/phpunit": "^4",
+        "php-mock/integration": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "mockery/mockery": "^0.9"
+    },
+    "archive": {
+        "exclude": ["/tests"]
+    }
+}
