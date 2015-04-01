@@ -3,9 +3,17 @@
 This package integrates the function mock library
 [PHP-Mock](https://github.com/php-mock/php-mock) with PHPUnit.
 
-# Requirements
-
 # Installation
+
+Use [Composer](https://getcomposer.org/):
+
+```json
+{
+    "require-dev": {
+        "php-mock/phpunit": "0.1"
+    }
+}
+```
 
 # Usage
 
@@ -24,19 +32,39 @@ namespace foo;
 
 use phpmock\phpunit\PHPMock;
 
-class FooTest extends \PHPUnit_Framework_TestCase
+class BuiltinTest extends \PHPUnit_Framework_TestCase
 {
 
     use PHPMock;
 
-    public function testBar()
+    public function testTime()
     {
         $time = $this->getFunctionMock(__NAMESPACE__, "time");
         $time->expects($this->once())->willReturn(3);
+
         $this->assertEquals(3, time());
+    }
+
+    public function testExec()
+    {
+        $exec = $this->getFunctionMock(__NAMESPACE__, "exec");
+        $exec->expects($this->once())->willReturnCallback(
+            function ($command, &$output, &$return_var) {
+                $this->assertEquals("foo", $command);
+                $output = ["failure"];
+                $return_var = 1;
+            }
+        );
+
+        exec("foo", $output, $return_var);
+        $this->assertEquals(["failure"], $output);
+        $this->assertEquals(1, $return_var);
     }
 }
 ```
+
+There's no need to disable the mocked function. The PHPUnit integration does
+that for you.
 
 # License and authors
 
