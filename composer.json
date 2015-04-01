@@ -19,9 +19,8 @@
     "require": {
         "php": ">=5.4",
         "phpunit/phpunit": "^4",
-        "php-mock/integration": "dev-master"
+        "php-mock/integration": "^0.2"
     },
-    "minimum-stability": "dev",
     "require-dev": {
         "mockery/mockery": "^0.9"
     },
