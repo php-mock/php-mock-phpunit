@@ -19,7 +19,7 @@ Use [Composer](https://getcomposer.org/):
 
 PHP-Mock integrates with the trait
 [`PHPMock`](http://php-mock.github.io/phpunit/api/class-phpmock.phpunit.PHPMock.html)
-to integrate into your PHPUnit-4 test case. This trait extends the framework
+into your PHPUnit-4 test case. This trait extends the framework
 by the method
 [`getFunctionMock()`](http://php-mock.github.io/phpunit/api/class-phpmock.phpunit.PHPMock.html#_getFunctionMock).
 With this method you can build a mock in the way you are used to build a
