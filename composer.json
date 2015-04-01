@@ -1,0 +1,8 @@
+{
+    "name": "php-mock/phpunit-doc",
+    "require": {
+        "php": ">=5",
+	"php-mock/phpunit": "dev-master",
+	"apigen/apigen": "^4"
+    }
+}
