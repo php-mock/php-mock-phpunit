@@ -1,4 +1,4 @@
 destination: api
 source:
-	- vendor/php-mock/phpunit/classes/
+	- vendor/php-mock/php-mock-phpunit/classes/
 	

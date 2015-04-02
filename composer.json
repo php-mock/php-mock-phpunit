@@ -2,7 +2,7 @@
     "name": "php-mock/phpunit-doc",
     "require": {
         "php": ">=5",
-	"php-mock/phpunit": "dev-master",
+	"php-mock/php-mock-phpunit": "dev-master",
 	"apigen/apigen": "^4"
     }
 }
