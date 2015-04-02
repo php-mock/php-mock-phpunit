@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use malkusch\phpmock\Deactivatable;
+use phpmock\Deactivatable;
 
 /**
  * Test listener for PHPUnit integration.

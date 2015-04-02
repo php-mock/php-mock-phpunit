@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use malkusch\phpmock\AbstractMockTest;
+use phpmock\AbstractMockTest;
 
 /**
  * Tests PHPMock.

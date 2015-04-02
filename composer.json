@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.4",
         "phpunit/phpunit": "^4",
-        "php-mock/php-mock-integration": "^0.2"
+        "php-mock/php-mock-integration": "^0.3"
     },
     "require-dev": {
         "mockery/mockery": "^0.9"

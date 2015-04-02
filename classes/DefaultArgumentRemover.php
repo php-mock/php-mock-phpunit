@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use malkusch\phpmock\MockFunctionHelper;
+use phpmock\MockFunctionHelper;
 
 /**
  * Removes default arguments from the invocation.

@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use malkusch\phpmock\Mock;
+use phpmock\Mock;
 
 /**
  * Tests MockDisabler.

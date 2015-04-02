@@ -3,8 +3,8 @@
 namespace phpmock\phpunit;
 
 use phpmock\integration\MockDelegateFunctionBuilder;
-use malkusch\phpmock\MockBuilder;
-use malkusch\phpmock\Deactivatable;
+use phpmock\MockBuilder;
+use phpmock\Deactivatable;
 
 /**
  * Adds building a function mock functionality into PHPUnit_Framework_TestCase.
