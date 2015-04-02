@@ -15,7 +15,7 @@ use phpmock\Deactivatable;
  *
  * namespace foo;
  *
- * use malkusch\phpmock\phpunit\PHPMock;
+ * use phpmock\phpunit\PHPMock;
  *
  * class FooTest extends \PHPUnit_Framework_TestCase
  * {
