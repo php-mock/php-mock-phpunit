@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use phpmock\MockFunctionHelper;
+use phpmock\generator\MockFunctionGenerator;
 
 /**
  * Removes default arguments from the invocation.
@@ -27,7 +27,7 @@ class DefaultArgumentRemover implements \PHPUnit_Framework_MockObject_Matcher_In
      */
     public function matches(\PHPUnit_Framework_MockObject_Invocation $invocation)
     {
-        MockFunctionHelper::removeDefaultArguments($invocation->parameters);
+        MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
         return false;
     }
 
