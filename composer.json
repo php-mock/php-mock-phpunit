@@ -21,7 +21,6 @@
         "phpunit/phpunit": "^4.0.0",
         "php-mock/php-mock-integration": "^0.4"
     },
-    "minimum-stability": "dev",
     "require-dev": {
         "mockery/mockery": "^0.9"
     },
