@@ -7,19 +7,15 @@ This package integrates the function mock library
 
 Use [Composer](https://getcomposer.org/):
 
-```json
-{
-    "require-dev": {
-        "php-mock/php-mock-phpunit": "^0.3"
-    }
-}
+```sh
+composer require php-mock/php-mock-phpunit
 ```
 
 # Usage
 
 PHP-Mock integrates with the trait
 [`PHPMock`](http://php-mock.github.io/php-mock-phpunit/api/class-phpmock.phpunit.PHPMock.html)
-into your PHPUnit-4 or PHPUnit-5 test case. This trait extends the framework
+into your PHPUnit test case. This trait extends the framework
 by the method
 [`getFunctionMock()`](http://php-mock.github.io/php-mock-phpunit/api/class-phpmock.phpunit.PHPMock.html#_getFunctionMock).
 With this method you can build a mock in the way you are used to build a
