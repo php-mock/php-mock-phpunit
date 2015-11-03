@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use Mockery;
+use \PHPUnit_Framework_MockObject_Builder_InvocationMocker as InvocationMocker;
 use phpmock\integration\MockDelegateFunctionBuilder;
 
 /**
@@ -11,17 +11,55 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  * @author Markus Malkusch <markus@malkusch.de>
  * @link bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK Donations
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
- * @see MockObjectProxyTest
+ * @see MockObjectProxy
+ * @requires PHPUnit 4.5.0
  */
 class MockObjectProxyTest extends \PHPUnit_Framework_TestCase
 {
+ 
+    /**
+     * Tests expects()
+     *
+     * @test
+     */
+    public function testExpects()
+    {
+        $matcher = $this->getMock(\PHPUnit_Framework_MockObject_Matcher_Invocation::class);
+        
+        $invocationMocker = $this->getMock(InvocationMocker::class, [], [], '', false);
+        $invocationMocker->expects($this->once())->method("method")
+                ->with(MockDelegateFunctionBuilder::METHOD)->willReturn($invocationMocker);
+        
+        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        $prophecy->expects($matcher)->willReturn($invocationMocker);
+        $mock = $prophecy->reveal();
+        
+        $proxy = new MockObjectProxy($mock);
+        
+        $result = $proxy->expects($matcher);
+        $this->assertEquals($invocationMocker, $result);
+    }
     
     /**
-     * Resets Mockery mocks.
+     * Tests delegation of __phpunit_hasMatchers().
+     *
+     * Before PHPUnit-5 __phpunit_hasMatchers() was not part of the contract.
+     * But it was used within PHPUnit as it would be. Unfortunately the
+     * mocking framework Prophecy will not allow to mock this method.
+     *
+     * @test
+     * @requires PHPUnit 5
      */
-    public function tearDown()
+    public function testHasMatcher()
     {
-        Mockery::close();
+        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        $prophecy->__phpunit_hasMatchers()->willReturn("foo");
+        $mock = $prophecy->reveal();
+        
+        $proxy = new MockObjectProxy($mock);
+        
+        $result = $proxy->__phpunit_hasMatchers();
+        $this->assertEquals("foo", $result);
     }
     
     /**
@@ -35,11 +73,11 @@ class MockObjectProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testProxiedMethods($method, array $arguments = [], $expected = "foo")
     {
-        $mock     = Mockery::mock("PHPUnit_Framework_MockObject_MockObject");
-        $proxy    = new MockObjectProxy($mock);
+        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        call_user_func_array([$prophecy, $method], $arguments)->willReturn($expected);
+        $mock = $prophecy->reveal();
         
-        $mock->shouldReceive($method)
-             ->once()->withArgs($arguments)->andReturn($expected);
+        $proxy = new MockObjectProxy($mock);
         
         $result = call_user_func_array([$proxy, $method], $arguments);
         $this->assertEquals($expected, $result);
@@ -52,21 +90,10 @@ class MockObjectProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function provideTestProxiedMethods()
     {
-        $expects = Mockery::mock("PHPUnit_Framework_MockObject_Builder_InvocationMocker");
-        $expects->shouldReceive("method")
-                ->withArgs([MockDelegateFunctionBuilder::METHOD])
-                ->andReturn($expects);
-        
         return [
             ["__phpunit_getInvocationMocker"],
             ["__phpunit_setOriginalObject", ["bar"]],
             ["__phpunit_verify"],
-            ["__phpunit_hasMatchers"],
-            [
-                "expects",
-                [Mockery::mock("PHPUnit_Framework_MockObject_Matcher_Invocation")],
-                $expects
-            ],
         ];
     }
 }

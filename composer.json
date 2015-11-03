@@ -21,9 +21,6 @@
         "phpunit/phpunit": "^4.0.0 || ^5.0.0",
         "php-mock/php-mock-integration": "^1"
     },
-    "require-dev": {
-        "mockery/mockery": "^0.9"
-    },
     "archive": {
         "exclude": ["/tests"]
     }
