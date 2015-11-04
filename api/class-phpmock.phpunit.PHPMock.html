@@ -219,7 +219,7 @@ directly created with PHPMock's API.</p>
 	<tr data-order="defineFunctionMock" id="_defineFunctionMock">
 
 		<td class="attributes"><code>
-			 public 
+			 public static
 
 			
 			
@@ -241,7 +241,7 @@ directly created with PHPMock's API.</p>
 is doing this for you. But if the mock is defined after the first call in the
 tested class, the tested class doesn't resolve to the mock. This is
 documented in Bug #68541. You therefore have to define the namespaced
-function before the first call (e.g. with @beforeClass).</p>
+function before the first call (e.g. with the beforeClass annotation).</p>
 
 <p>Defining the function has no side effects. If the function was
 already defined this method does nothing.</p>

@@ -196,7 +196,7 @@
 </span></span><span id="116" class="l"><span class="php-comment">     * is doing this for you. But if the mock is defined after the first call in the
 </span></span><span id="117" class="l"><span class="php-comment">     * tested class, the tested class doesn't resolve to the mock. This is
 </span></span><span id="118" class="l"><span class="php-comment">     * documented in Bug #68541. You therefore have to define the namespaced
-</span></span><span id="119" class="l"><span class="php-comment">     * function before the first call (e.g. with @beforeClass).
+</span></span><span id="119" class="l"><span class="php-comment">     * function before the first call (e.g. with the beforeClass annotation).
 </span></span><span id="120" class="l"><span class="php-comment">     *
 </span></span><span id="121" class="l"><span class="php-comment">     * Defining the function has no side effects. If the function was
 </span></span><span id="122" class="l"><span class="php-comment">     * already defined this method does nothing.
@@ -207,7 +207,7 @@
 </span></span><span id="127" class="l"><span class="php-comment">     * @param string $namespace The function namespace.
 </span></span><span id="128" class="l"><span class="php-comment">     * @param string $name      The function name.
 </span></span><span id="129" class="l"><span class="php-comment">     */</span>
-</span><span id="130" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> defineFunctionMock(<span class="php-var">$namespace</span>, <span class="php-var">$name</span>)
+</span><span id="130" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> defineFunctionMock(<span class="php-var">$namespace</span>, <span class="php-var">$name</span>)
 </span><span id="131" class="l">    {
 </span><span id="132" class="l">        <span class="php-var">$functionMockBuilder</span> = <span class="php-keyword1">new</span> MockBuilder();
 </span><span id="133" class="l">        <span class="php-var">$functionMockBuilder</span>-&gt;setNamespace(<span class="php-var">$namespace</span>)
