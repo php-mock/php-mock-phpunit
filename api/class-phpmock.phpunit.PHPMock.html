@@ -5,7 +5,7 @@
 
 	<title>Trait phpmock\phpunit\PHPMock</title>
 
-	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
 </head>
 
@@ -126,7 +126,7 @@
 				Markus Malkusch <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;">&#x6d;&#x61;&#114;&#107;&#117;&#115;&#64;&#x6d;&#x61;&#x6c;&#x6b;u&#115;&#99;&#104;&#46;&#x64;&#x65;</a><br>
 				<b>Link:</b>
 				<a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a><br>
-			<b>Located at</b> <a href="source-class-phpmock.phpunit.PHPMock.html#9-111" title="Go to source code">PHPMock.php</a>
+			<b>Located at</b> <a href="source-class-phpmock.phpunit.PHPMock.html#9-140" title="Go to source code">PHPMock.php</a>
 		<br>
 	</div>
 
@@ -211,6 +211,60 @@ directly created with PHPMock's API.</p>
 
 
 
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="defineFunctionMock" id="_defineFunctionMock">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_defineFunctionMock">#</a>
+		<code><a href="source-class-phpmock.phpunit.PHPMock.html#112-139" title="Go to source code">defineFunctionMock</a>( <span>string <var>$namespace</var></span>, <span>string <var>$name</var></span> )</code>
+
+		<div class="description short">
+			<p>Defines the mocked function in the given namespace.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Defines the mocked function in the given namespace.</p>
+
+<p>In most cases you don't have to call this method. <code><a href="class-phpmock.phpunit.PHPMock.html#_getFunctionMock">phpmock\phpunit\PHPMock::getFunctionMock()</a></code>
+is doing this for you. But if the mock is defined after the first call in the
+tested class, the tested class doesn't resolve to the mock. This is
+documented in Bug #68541. You therefore have to define the namespaced
+function before the first call (e.g. with @beforeClass).</p>
+
+<p>Defining the function has no side effects. If the function was
+already defined this method does nothing.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$namespace</var></dt>
+					<dd>The function namespace.</dd>
+					<dt><var>$name</var></dt>
+					<dd>The function name.</dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-phpmock.phpunit.PHPMock.html#_getFunctionMock">phpmock\phpunit\PHPMock::getFunctionMock()</a></code><br>
+				</div>
+				<h4>Link</h4>
+				<div class="list">
+						<a href="https://bugs.php.net/bug.php?id=68541">Bug #68541</a><br>
+				</div>
 
 
 		</div>
