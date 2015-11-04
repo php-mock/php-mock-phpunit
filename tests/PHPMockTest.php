@@ -34,7 +34,7 @@ class PHPMockTest extends AbstractMockTest
      */
     public function testDefineFunctionMock()
     {
-        $this->defineFunctionMock(__NAMESPACE__, "escapeshellcmd");
+        self::defineFunctionMock(__NAMESPACE__, "escapeshellcmd");
         self::escapeshellcmd("foo");
         
         $mock = $this->getFunctionMock(__NAMESPACE__, "escapeshellcmd");

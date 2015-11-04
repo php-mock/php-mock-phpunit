@@ -116,7 +116,7 @@ trait PHPMock
      * is doing this for you. But if the mock is defined after the first call in the
      * tested class, the tested class doesn't resolve to the mock. This is
      * documented in Bug #68541. You therefore have to define the namespaced
-     * function before the first call (e.g. with @beforeClass).
+     * function before the first call (e.g. with the beforeClass annotation).
      *
      * Defining the function has no side effects. If the function was
      * already defined this method does nothing.
@@ -127,7 +127,7 @@ trait PHPMock
      * @param string $namespace The function namespace.
      * @param string $name      The function name.
      */
-    public function defineFunctionMock($namespace, $name)
+    public static function defineFunctionMock($namespace, $name)
     {
         $functionMockBuilder = new MockBuilder();
         $functionMockBuilder->setNamespace($namespace)
