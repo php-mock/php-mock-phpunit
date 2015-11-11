@@ -17,6 +17,11 @@ class PHPMockTest extends AbstractMockTest
 
     use PHPMock;
     
+    protected function defineFunction($namespace, $functionName)
+    {
+        self::defineFunctionMock($namespace, $functionName);
+    }
+    
     protected function mockFunction($namespace, $functionName, callable $function)
     {
         $mock = $this->getFunctionMock($namespace, $functionName);
@@ -25,34 +30,6 @@ class PHPMockTest extends AbstractMockTest
     
     protected function disableMocks()
     {
-    }
-    
-    /**
-     * Tests defineFunctionMock().
-     *
-     * @test
-     */
-    public function testDefineFunctionMock()
-    {
-        self::defineFunctionMock(__NAMESPACE__, "escapeshellcmd");
-        self::escapeshellcmd("foo");
-        
-        $mock = $this->getFunctionMock(__NAMESPACE__, "escapeshellcmd");
-        $mock->expects($this->once())->willReturn("bar");
-        
-        $this->assertEquals("bar", self::escapeshellcmd("foo"));
-    }
-    
-    /**
-     * Returns the built-in call to escapeshellcmd().
-     *
-     * @param string $command Shell command.
-     *
-     * @return string The built-in call.
-     */
-    private static function escapeshellcmd($command)
-    {
-        return escapeshellcmd($command);
     }
     
     /**
