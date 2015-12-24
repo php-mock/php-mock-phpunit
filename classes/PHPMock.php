@@ -2,6 +2,7 @@
 
 namespace phpmock\phpunit;
 
+use phpmock\phpunit\message\FunctionInvocationMocker;
 use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
@@ -77,7 +78,7 @@ trait PHPMock
         $delegateBuilder->build($name);
         
         $mock = $this->getMockBuilder($delegateBuilder->getFullyQualifiedClassName())->getMockForAbstractClass();
-        
+        self::injectFunctionNameInfrastructure($name, $mock);
         $mock->__phpunit_getInvocationMocker()->addMatcher(new DefaultArgumentRemover());
         
         $functionMockBuilder = new MockBuilder();
@@ -136,5 +137,26 @@ trait PHPMock
                             })
                             ->build()
                             ->define();
+    }
+    
+    /**
+     * Injects the function name into the mock framework.
+     *
+     * PHPUnit would print a useless error message about the support
+     * object which doesn't point to the mocked function. This method injects
+     * the infrastructure which let PHPUnit print the function name.
+     *
+     * As PHPUnit is not designed to be extended in this way this implementation
+     * depends highly on implementation details and might break with a new
+     * PHPUnit version.
+     *
+     * @param string $name function name
+     * @param \PHPUnit_Framework_MockObject_MockObject $mock mock
+     */
+    private static function injectFunctionNameInfrastructure($name, \PHPUnit_Framework_MockObject_MockObject $mock)
+    {
+        $mocker = new \ReflectionProperty($mock, "__phpunit_invocationMocker");
+        $mocker->setAccessible(true);
+        $mocker->setValue($mock, new FunctionInvocationMocker($name));
     }
 }

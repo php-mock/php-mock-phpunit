@@ -62,4 +62,17 @@ class PHPMockTest extends AbstractMockTest
             time(); // satisfy the expectation
         }
     }
+    
+    /**
+     * Tests that the expectation message points to the mocked function.
+     *
+     * @test
+     */
+    public function testMessage()
+    {
+        $time = $this->getFunctionMock(__NAMESPACE__, "time");
+        $time->expects($this->never());
+        
+        time();
+    }
 }
