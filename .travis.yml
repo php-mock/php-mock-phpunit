@@ -8,7 +8,8 @@ cache:
 
 env:
   - PHPUNIT_VERSION=dev-master
-  - PHPUNIT_VERSION=~5.2.0-dev
+  - PHPUNIT_VERSION=~5.3.0-dev
+  - PHPUNIT_VERSION=~5.2.0
   - PHPUNIT_VERSION=~5.1.0
   - PHPUNIT_VERSION=~5.0.0
   - PHPUNIT_VERSION=~4.8.0
@@ -37,12 +38,12 @@ matrix:
       php: 5.5
     - env: PHPUNIT_VERSION=~5.1.0
       php: 5.5
-    - env: PHPUNIT_VERSION=~5.2.0-dev
+    - env: PHPUNIT_VERSION=~5.2.0
+      php: 5.5
+    - env: PHPUNIT_VERSION=~5.3.0-dev
       php: 5.5
     - env: PHPUNIT_VERSION=dev-master
       php: 5.5
-    - env: PHPUNIT_VERSION=dev-master
-      php: 5.6
 
 install:
   - composer require phpunit/phpunit:${PHPUNIT_VERSION}
