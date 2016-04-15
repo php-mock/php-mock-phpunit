@@ -76,7 +76,8 @@ This library comes with the same restrictions as the underlying
   In most cases you can ignore this restriction. But if you happen to run into
   this issue you can call [`PHPMock::defineFunctionMock()`](http://php-mock.github.io/php-mock-phpunit/api/class-phpmock.phpunit.PHPMock.html#_defineFunctionMock)
   before that first call (e.g. with `@beforeClass`).
-  This would define a side effectless namespaced function.
+  This would define a side effectless namespaced function. Another effective
+  approach is running your test in an isolated process (e.g. with `@runInSeparateProcess`).
 
 # License and authors
 
