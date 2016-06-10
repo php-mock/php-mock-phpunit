@@ -90,4 +90,3 @@ If you like this project and feel generous donate a few Bitcoins here:
 [1335STSwu9hST4vcMRppEPgENMHD2r1REK](bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK)
 
 [![Build Status](https://travis-ci.org/php-mock/php-mock-phpunit.svg?branch=master)](https://travis-ci.org/php-mock/php-mock-phpunit)
-
