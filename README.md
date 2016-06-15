@@ -8,7 +8,7 @@ This package integrates the function mock library
 Use [Composer](https://getcomposer.org/):
 
 ```sh
-composer require php-mock/php-mock-phpunit
+composer require --dev php-mock/php-mock-phpunit
 ```
 
 # Usage
