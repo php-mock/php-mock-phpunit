@@ -8,6 +8,7 @@ cache:
 
 env:
   - PHPUNIT_VERSION=dev-master
+  - PHPUNIT_VERSION=~5.5.0
   - PHPUNIT_VERSION=~5.4.0
   - PHPUNIT_VERSION=~5.3.0
   - PHPUNIT_VERSION=~5.2.0
@@ -45,6 +46,8 @@ matrix:
     - env: PHPUNIT_VERSION=~5.3.0
       php: 5.5
     - env: PHPUNIT_VERSION=~5.4.0
+      php: 5.5
+    - env: PHPUNIT_VERSION=~5.5.0
       php: 5.5
     - env: PHPUNIT_VERSION=dev-master
       php: 5.5
