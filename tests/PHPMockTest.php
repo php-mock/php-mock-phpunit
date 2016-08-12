@@ -27,6 +27,11 @@ class PHPMockTest extends AbstractMockTest
     {
     }
     
+    protected function defineFunction($namespace, $functionName)
+    {
+        $this->markTestSkipped();
+    }
+    
     /**
      * Tests building a mock with arguments.
      *
