@@ -8,6 +8,8 @@ cache:
 
 env:
   - PHPUNIT_VERSION=dev-master
+  - PHPUNIT_VERSION=~4.8.0
+  - PHPUNIT_VERSION=~4.7.0
   - PHPUNIT_VERSION=~4.6.0
   - PHPUNIT_VERSION=~4.5.0
   - PHPUNIT_VERSION=~4.4.0
@@ -26,6 +28,7 @@ php:
 matrix:
   fast_finish: true
   allow_failures:
+    - env: PHPUNIT_VERSION=dev-master
     - php: hhvm
 
 install:
