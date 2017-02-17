@@ -7,20 +7,18 @@ use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 
 /**
- * Adds building a function mock functionality into PHPUnit_Framework_TestCase.
+ * Adds building a function mock functionality into \PHPUnit\Framework\TestCase.
  *
- * Use this trait in your PHPUnit_Framework_TestCase:
+ * Use this trait in your \PHPUnit\Framework\TestCase:
  * <code>
  * <?php
  *
  * namespace foo;
  *
- * use phpmock\phpunit\PHPMock;
- *
- * class FooTest extends \PHPUnit_Framework_TestCase
+ * class FooTest extends \PHPUnit\Framework\TestCase
  * {
  *
- *     use PHPMock;
+ *     use \phpmock\phpunit\PHPMock;
  *
  *     public function testBar()
  *     {
@@ -41,11 +39,11 @@ trait PHPMock
     /**
      * Returns a builder object to create mock objects using a fluent interface.
      *
-     * This method exists in PHPUnit_Framework_TestCase.
+     * This method exists in \PHPUnit\Framework\TestCase.
      *
      * @param string $className Name of the class to mock.
      * @return \PHPUnit_Framework_MockObject_MockBuilder
-     * @see \PHPUnit_Framework_TestCase::getMockBuilder()
+     * @see \PHPUnit\Framework\TestCase::getMockBuilder()
      * @internal
      */
     abstract protected function getMockBuilder($className);
@@ -53,10 +51,10 @@ trait PHPMock
     /**
      * Returns the test result.
      *
-     * This method exists in PHPUnit_Framework_TestCase.
+     * This method exists in \PHPUnit\Framework\TestCase.
      *
-     * @return \PHPUnit_Framework_TestResult The test result.
-     * @see \PHPUnit_Framework_TestCase::getTestResultObject()
+     * @return \PHPUnit\Framework\TestResult The test result.
+     * @see \PHPUnit\Framework\TestCase::getTestResultObject()
      * @internal
      */
     abstract protected function getTestResultObject();
