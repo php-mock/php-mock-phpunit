@@ -3,6 +3,7 @@
 namespace phpmock\phpunit;
 
 use phpmock\AbstractMockTest;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Tests PHPMock.
@@ -58,7 +59,7 @@ class PHPMockTest extends AbstractMockTest
 
             $time->__phpunit_verify();
             $this->fail("Expectation should fail");
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (ExpectationFailedException $e) {
             time(); // satisfy the expectation
         }
     }

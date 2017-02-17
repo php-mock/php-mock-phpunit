@@ -3,6 +3,7 @@
 namespace phpmock\phpunit;
 
 use \PHPUnit_Framework_MockObject_Builder_InvocationMocker as InvocationMocker;
+use PHPUnit\Framework\TestCase;
 use phpmock\integration\MockDelegateFunctionBuilder;
 
 /**
@@ -14,7 +15,7 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  * @see MockObjectProxy
  * @requires PHPUnit 4.5.0
  */
-class MockObjectProxyTest extends \PHPUnit_Framework_TestCase
+class MockObjectProxyTest extends TestCase
 {
 
     /**
