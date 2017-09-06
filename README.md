@@ -21,10 +21,12 @@ by the method
 With this method you can build a mock in the way you are used to build a
 PHPUnit mock:
 
+## Examples
+1. Test built-in function with mocked results within same namespace.
 ```php
 <?php
 
-namespace foo;
+namespace Foo;
 
 class BuiltinTest extends \PHPUnit\Framework\TestCase
 {
@@ -56,6 +58,74 @@ class BuiltinTest extends \PHPUnit\Framework\TestCase
     }
 }
 ```
+
+2. When class to be tested and the test class are in different namespace.
+
+```php
+<?php
+// Source class to be tested
+namespace Foo;
+ 
+class TimeClass
+{
+    public function oneHourAgo()
+    {
+        return date('H:i:s', time() - 3600);
+    }
+}
+```
+```php
+<?php
+// Tests for TimeClass
+namespace Tests\Foo;
+ 
+use PHPUnit\Framework\TestCase;
+ 
+class TimeClassTest extends TestCase
+{
+    use \phpmock\phpunit\PHPMock;
+
+    /**
+     * @var TimeClass
+     */
+    private $timeClass;
+ 
+    /**
+     * Create test subject before test
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->timeClass = new TimeClass();
+    }
+    
+    protected function tearDown()
+    {
+        this->timeClass = null;
+        parent::tearDown();
+    }
+ 
+    /*
+     * Test cases
+     */
+    public function testOneHourAgoFromNoon()
+    {
+        $time = $this->getFunctionMock('\\Foo', 'time');
+        $time->expects($this->once())->willReturn(strtotime('12:00'));
+
+        $this->assertEquals('11:00', $this->timeClass->oneHourAgo());
+    }
+    
+    public function testOneHourAgoFromMidnight()
+    {
+        $time = $this->getFunctionMock('\\Foo', 'time');
+        $time->expects($this->once())->willReturn(strtotime('0:00'));
+
+        $this->assertEquals('23:00', $this->timeClass->oneHourAgo());
+    }
+}
+```
+
 
 There's no need to disable the mocked function. The PHPUnit integration does
 that for you.
