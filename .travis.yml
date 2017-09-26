@@ -9,6 +9,9 @@ cache:
 env:
   - PHPUNIT_VERSION=dev-master
   - PHPUNIT_VERSION=~6.0.0
+  - PHPUNIT_VERSION=~6.1.0
+  - PHPUNIT_VERSION=~6.2.0
+  - PHPUNIT_VERSION=~6.3.0
 
 php:
   - 7.1
