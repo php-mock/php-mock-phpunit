@@ -29,7 +29,12 @@ class DefaultArgumentRemover implements InvocationInterface
      */
     public function matches(Invocation $invocation)
     {
-        MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
+        $r = new \ReflectionObject($invocation);
+        $method = $r->hasMethod('getParameters');
+
+        $params = $method ? $invocation->getParameters() : $invocation->parameters;
+
+        MockFunctionGenerator::removeDefaultArguments($params);
         return false;
     }
 
