@@ -32,9 +32,21 @@ class DefaultArgumentRemover implements InvocationInterface
         $r = new \ReflectionObject($invocation);
         $method = $r->hasMethod('getParameters');
 
-        $params = $method ? $invocation->getParameters() : $invocation->parameters;
+        if ($method) {
+            $params = $invocation->getParameters();
+        } else {
+            $params = &$invocation->parameters;
+        }
 
         MockFunctionGenerator::removeDefaultArguments($params);
+
+        if ($method) {
+            $parent = $r->getParentClass();
+            $p = $parent->getProperty('parameters');
+            $p->setAccessible(true);
+            $p->setValue($invocation, $params);
+        }
+
         return false;
     }
 
