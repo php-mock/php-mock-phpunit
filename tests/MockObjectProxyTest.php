@@ -2,7 +2,9 @@
 
 namespace phpmock\phpunit;
 
-use \PHPUnit_Framework_MockObject_Builder_InvocationMocker as InvocationMocker;
+use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
+use PHPUnit\Framework\MockObject\Matcher\Invocation;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use phpmock\integration\MockDelegateFunctionBuilder;
 
@@ -25,7 +27,7 @@ class MockObjectProxyTest extends TestCase
      */
     public function testExpects()
     {
-        $matcher = $this->getMockBuilder(\PHPUnit_Framework_MockObject_Matcher_Invocation::class)->getMock();
+        $matcher = $this->getMockBuilder(Invocation::class)->getMock();
 
         $invocationMocker = $this->getMockBuilder(InvocationMocker::class)->disableOriginalConstructor()->getMock();
         $invocationMocker->expects($this->once())->method("method")
@@ -53,7 +55,7 @@ class MockObjectProxyTest extends TestCase
      */
     public function testHasMatcher()
     {
-        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        $prophecy = $this->prophesize(MockObject::class);
         $prophecy->__phpunit_hasMatchers()->willReturn("foo");
         $mock = $prophecy->reveal();
 
@@ -74,7 +76,7 @@ class MockObjectProxyTest extends TestCase
      */
     public function testProxiedMethods($method, array $arguments = [], $expected = "foo")
     {
-        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        $prophecy = $this->prophesize(MockObject::class);
         call_user_func_array([$prophecy, $method], $arguments)->willReturn($expected);
         $mock = $prophecy->reveal();
 
