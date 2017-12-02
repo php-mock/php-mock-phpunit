@@ -33,7 +33,7 @@ class MockObjectProxyTest extends TestCase
         $invocationMocker->expects($this->once())->method("method")
                 ->with(MockDelegateFunctionBuilder::METHOD)->willReturn($invocationMocker);
 
-        $prophecy = $this->prophesize(\PHPUnit_Framework_MockObject_MockObject::class);
+        $prophecy = $this->prophesize(MockObject::class);
         $prophecy->expects($matcher)->willReturn($invocationMocker);
         $mock = $prophecy->reveal();
 
