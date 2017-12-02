@@ -3,6 +3,8 @@
 namespace phpmock\phpunit;
 
 use phpmock\generator\MockFunctionGenerator;
+use PHPUnit\Framework\MockObject\Invocation;
+use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
 
 /**
  * Removes default arguments from the invocation.
@@ -12,22 +14,41 @@ use phpmock\generator\MockFunctionGenerator;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class DefaultArgumentRemover implements \PHPUnit_Framework_MockObject_Matcher_Invocation
+class DefaultArgumentRemover implements InvocationInterface
 {
 
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function invoked(\PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoked(Invocation $invocation)
     {
     }
 
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function matches(\PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function matches(Invocation $invocation)
     {
-        MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
+        $r = new \ReflectionObject($invocation);
+        $method = $r->hasMethod('getParameters');
+
+        if ($method) {
+            $params = $invocation->getParameters();
+        } else {
+            $params = &$invocation->parameters;
+        }
+
+        MockFunctionGenerator::removeDefaultArguments($params);
+
+        if ($method) {
+            while (! $r->hasProperty('parameters')) {
+                $r = $r->getParentClass();
+            }
+            $p = $r->getProperty('parameters');
+            $p->setAccessible(true);
+            $p->setValue($invocation, $params);
+        }
+
         return false;
     }
 
