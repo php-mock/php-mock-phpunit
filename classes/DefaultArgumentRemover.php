@@ -41,8 +41,10 @@ class DefaultArgumentRemover implements InvocationInterface
         MockFunctionGenerator::removeDefaultArguments($params);
 
         if ($method) {
-            $parent = $r->getParentClass();
-            $p = $parent->getProperty('parameters');
+            while (! $r->hasProperty('parameters')) {
+                $r = $r->getParentClass();
+            }
+            $p = $r->getProperty('parameters');
             $p->setAccessible(true);
             $p->setValue($invocation, $params);
         }
