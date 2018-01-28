@@ -18,7 +18,8 @@
     },
     "require": {
         "php": ">=7",
-        "phpunit/phpunit": "^6 <6.5",
+        "phpunit/phpunit": "^6",
+        "phpunit/phpunit-mock-objects": "^4",
         "php-mock/php-mock-integration": "^2"
     },
     "archive": {
