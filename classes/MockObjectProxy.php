@@ -2,7 +2,8 @@
 
 namespace phpmock\phpunit;
 
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\Matcher\Invocation;
+use PHPUnit\Framework\MockObject\MockObject;
 use phpmock\integration\MockDelegateFunctionBuilder;
 
 /**
@@ -61,7 +62,7 @@ class MockObjectProxy implements MockObject
         return $this->mockObject->__phpunit_verify();
     }
 
-    public function expects(\PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
+    public function expects(Invocation $matcher)
     {
         return $this->mockObject->expects($matcher)->method(MockDelegateFunctionBuilder::METHOD);
     }

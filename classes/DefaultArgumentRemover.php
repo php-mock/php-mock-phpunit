@@ -3,6 +3,8 @@
 namespace phpmock\phpunit;
 
 use phpmock\generator\MockFunctionGenerator;
+use PHPUnit\Framework\MockObject\Invocation;
+use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
 
 /**
  * Removes default arguments from the invocation.
@@ -12,22 +14,27 @@ use phpmock\generator\MockFunctionGenerator;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class DefaultArgumentRemover implements \PHPUnit_Framework_MockObject_Matcher_Invocation
+class DefaultArgumentRemover implements InvocationInterface
 {
 
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function invoked(\PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoked(Invocation $invocation)
     {
     }
 
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function matches(\PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function matches(Invocation $invocation)
     {
-        MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
+        if ($invocation instanceof Invocation\StaticInvocation) {
+            $this->removeDefaultArguments($invocation);
+        } else {
+            MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
+        }
+
         return false;
     }
 
@@ -47,8 +54,22 @@ class DefaultArgumentRemover implements \PHPUnit_Framework_MockObject_Matcher_In
         return false;
     }
 
-    public function toString()
+    public function toString() : string
     {
         return __CLASS__;
+    }
+
+    /**
+     * Remove default arguments from StaticInvocation or its children (hack)
+     *
+     * @SuppressWarnings(PHPMD)
+     */
+    private function removeDefaultArguments(Invocation\StaticInvocation $invocation)
+    {
+        $remover = function () {
+            MockFunctionGenerator::removeDefaultArguments($this->parameters);
+        };
+
+        $remover->bindTo($invocation, Invocation\StaticInvocation::class)();
     }
 }
