@@ -13,15 +13,22 @@ env:
   - PHPUNIT_VERSION=~6.2.0
   - PHPUNIT_VERSION=~6.3.0
   - PHPUNIT_VERSION=~6.4.0
+  - PHPUNIT_VERSION=~6.5.0
+  - PHPUNIT_VERSION=~7.0.0
 
 php:
   - 7.2
   - 7.1
-  - 7.0
+  - 7
   - hhvm
 
 matrix:
   fast_finish: true
+  exclude:
+    - php: 7
+      env: PHPUNIT_VERSION=dev-master
+    - php: 7
+      env: PHPUNIT_VERSION=~7.0.0
   allow_failures:
     - php: hhvm
     - env: PHPUNIT_VERSION=dev-master

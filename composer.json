@@ -14,11 +14,12 @@
         }
     ],
     "autoload": {
+        "files": ["autoload.php"],
         "psr-4": {"phpmock\\phpunit\\": "classes/"}
     },
     "require": {
         "php": ">=7",
-        "phpunit/phpunit": "^6 <6.5",
+        "phpunit/phpunit": "^6 || ^7",
         "php-mock/php-mock-integration": "^2"
     },
     "archive": {

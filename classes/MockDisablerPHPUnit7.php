@@ -16,7 +16,7 @@ use PHPUnit\Framework\Test;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class MockDisabler extends BaseTestListener
+class MockDisablerPHPUnit7 extends BaseTestListener
 {
 
     /**
@@ -42,7 +42,7 @@ class MockDisabler extends BaseTestListener
      *
      * @see Mock::disable()
      */
-    public function endTest(Test $test, $time)
+    public function endTest(Test $test, float $time) : void
     {
         parent::endTest($test, $time);
         
