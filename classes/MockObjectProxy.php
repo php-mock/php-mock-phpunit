@@ -79,4 +79,14 @@ class MockObjectProxy implements MockObject
         // @codingStandardsIgnoreEnd
         return $this->mockObject->__phpunit_hasMatchers();
     }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
+    // @codingStandardsIgnoreStart
+    public function __phpunit_setReturnValueGeneration(bool $returnValueGeneration)
+    {
+        // @codingStandardsIgnoreEnd
+        return $this->mockObject->__phpunit_setReturnValueGeneration($returnValueGeneration);
+    }
 }
