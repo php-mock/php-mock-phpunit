@@ -16,6 +16,7 @@ env:
   - PHPUNIT_VERSION=~6.5.0
   - PHPUNIT_VERSION=~7.0.0
   - PHPUNIT_VERSION=~7.1.0
+  - PHPUNIT_VERSION=~7.2.0
 
 php:
   - 7.2
