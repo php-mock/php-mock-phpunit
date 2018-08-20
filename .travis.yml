@@ -17,6 +17,7 @@ env:
   - PHPUNIT_VERSION=~7.0.0
   - PHPUNIT_VERSION=~7.1.0
   - PHPUNIT_VERSION=~7.2.0
+  - PHPUNIT_VERSION=~7.3.0
 
 php:
   - 7.2
@@ -29,6 +30,8 @@ matrix:
   exclude:
     - php: 7
       env: PHPUNIT_VERSION=dev-master
+    - php: 7
+      env: PHPUNIT_VERSION=~7.3.0
     - php: 7
       env: PHPUNIT_VERSION=~7.2.0
     - php: 7
