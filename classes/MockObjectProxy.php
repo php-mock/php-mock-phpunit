@@ -56,10 +56,10 @@ class MockObjectProxy implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_verify()
+    public function __phpunit_verify(bool $unsetInvocationMocker = true)
     {
         // @codingStandardsIgnoreEnd
-        return $this->mockObject->__phpunit_verify();
+        return $this->mockObject->__phpunit_verify($unsetInvocationMocker);
     }
 
     public function expects(Invocation $matcher)

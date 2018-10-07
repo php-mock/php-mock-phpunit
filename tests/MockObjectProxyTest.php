@@ -96,7 +96,7 @@ class MockObjectProxyTest extends TestCase
         return [
             ["__phpunit_getInvocationMocker"],
             ["__phpunit_setOriginalObject", ["bar"]],
-            ["__phpunit_verify"],
+            ["__phpunit_verify", [true]],
         ];
     }
 }
