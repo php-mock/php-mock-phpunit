@@ -2,6 +2,8 @@
 
 namespace phpmock\phpunit;
 
+use PHPUnit\Framework\MockObject\Matcher\MethodName;
+use PHPUnit\Framework\MockObject\Stub\MatcherCollection;
 use PHPUnit\Framework\TestCase;
 use phpmock\integration\MockDelegateFunctionBuilder;
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
@@ -29,9 +31,11 @@ class MockObjectProxyTest extends TestCase
     {
         $matcher = $this->getMockBuilder(Invocation::class)->getMock();
 
-        $invocationMocker = $this->getMockBuilder(InvocationMocker::class)->disableOriginalConstructor()->getMock();
-        $invocationMocker->expects($this->once())->method("method")
-                ->with(MockDelegateFunctionBuilder::METHOD)->willReturn($invocationMocker);
+        $invocationMocker = new InvocationMocker(
+            $this->prophesize(MatcherCollection::class)->reveal(),
+            $this->prophesize(Invocation::class)->reveal(),
+            [MockDelegateFunctionBuilder::METHOD]
+        );
 
         $prophecy = $this->prophesize(MockObject::class);
         $prophecy->expects($matcher)->willReturn($invocationMocker);
@@ -41,6 +45,11 @@ class MockObjectProxyTest extends TestCase
 
         $result = $proxy->expects($matcher);
         $this->assertEquals($invocationMocker, $result);
+
+        $this->assertSame(
+            (new MethodName(MockDelegateFunctionBuilder::METHOD))->toString(),
+            ($invocationMocker->getMatcher()->methodNameMatcher ?? $invocationMocker->getMatcher()->getMethodNameMatcher())->toString()
+        );
     }
 
     /**
