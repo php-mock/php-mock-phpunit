@@ -48,7 +48,8 @@ class MockObjectProxyTest extends TestCase
 
         $this->assertSame(
             (new MethodName(MockDelegateFunctionBuilder::METHOD))->toString(),
-            ($invocationMocker->getMatcher()->methodNameMatcher ?? $invocationMocker->getMatcher()->getMethodNameMatcher())->toString()
+            ($invocationMocker->getMatcher()->methodNameMatcher
+                ?? $invocationMocker->getMatcher()->getMethodNameMatcher())->toString()
         );
     }
 
