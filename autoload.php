@@ -28,6 +28,20 @@ if (! class_exists(\PHPUnit\Framework\MockObject\Builder\InvocationMocker::class
     );
 }
 
+if (! class_exists(\PHPUnit\Framework\MockObject\Matcher\MethodName::class)) {
+    class_alias(
+        \PHPUnit_Framework_MockObject_Matcher_MethodName::class,
+        \PHPUnit\Framework\MockObject\Matcher\MethodName::class
+    );
+}
+
+if (! interface_exists(\PHPUnit\Framework\MockObject\Stub\MatcherCollection::class)) {
+    class_alias(
+        \PHPUnit_Framework_MockObject_Stub_MatcherCollection::class,
+        \PHPUnit\Framework\MockObject\Stub\MatcherCollection::class
+    );
+}
+
 if (! class_exists(\PHPUnit\Framework\BaseTestListener::class)) {
     include __DIR__ . '/compatibility/BaseTestListener.php';
     class_alias(
