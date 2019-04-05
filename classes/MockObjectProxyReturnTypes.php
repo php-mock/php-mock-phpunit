@@ -2,6 +2,8 @@
 
 namespace phpmock\phpunit;
 
+use PHPUnit\Framework\MockObject\Builder\InvocationMocker as BuilderInvocationMocker;
+use PHPUnit\Framework\MockObject\InvocationMocker;
 use PHPUnit\Framework\MockObject\Matcher\Invocation;
 use PHPUnit\Framework\MockObject\MockObject;
 use phpmock\integration\MockDelegateFunctionBuilder;
@@ -14,7 +16,7 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class MockObjectProxy implements MockObject
+class MockObjectProxyReturnTypes implements MockObject
 {
     
     /**
@@ -36,7 +38,7 @@ class MockObjectProxy implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_getInvocationMocker()
+    public function __phpunit_getInvocationMocker() : InvocationMocker
     {
         // @codingStandardsIgnoreEnd
         return $this->mockObject->__phpunit_getInvocationMocker();
@@ -46,23 +48,23 @@ class MockObjectProxy implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_setOriginalObject($originalObject)
+    public function __phpunit_setOriginalObject($originalObject) : void
     {
         // @codingStandardsIgnoreEnd
-        return $this->mockObject->__phpunit_setOriginalObject($originalObject);
+        $this->mockObject->__phpunit_setOriginalObject($originalObject);
     }
 
     /**
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_verify(bool $unsetInvocationMocker = true)
+    public function __phpunit_verify(bool $unsetInvocationMocker = true) : void
     {
         // @codingStandardsIgnoreEnd
-        return $this->mockObject->__phpunit_verify($unsetInvocationMocker);
+        $this->mockObject->__phpunit_verify($unsetInvocationMocker);
     }
 
-    public function expects(Invocation $matcher)
+    public function expects(Invocation $matcher) : BuilderInvocationMocker
     {
         return $this->mockObject->expects($matcher)->method(MockDelegateFunctionBuilder::METHOD);
     }
@@ -74,7 +76,7 @@ class MockObjectProxy implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_hasMatchers()
+    public function __phpunit_hasMatchers() : bool
     {
         // @codingStandardsIgnoreEnd
         return $this->mockObject->__phpunit_hasMatchers();
@@ -84,9 +86,9 @@ class MockObjectProxy implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_setReturnValueGeneration(bool $returnValueGeneration)
+    public function __phpunit_setReturnValueGeneration(bool $returnValueGeneration) : void
     {
         // @codingStandardsIgnoreEnd
-        return $this->mockObject->__phpunit_setReturnValueGeneration($returnValueGeneration);
+        $this->mockObject->__phpunit_setReturnValueGeneration($returnValueGeneration);
     }
 }

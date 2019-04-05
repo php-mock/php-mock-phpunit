@@ -21,6 +21,7 @@ env:
   - PHPUNIT_VERSION=~7.4.0
   - PHPUNIT_VERSION=~7.5.0
   - PHPUNIT_VERSION=~8.0.0
+  - PHPUNIT_VERSION=~8.1.0
 
 php:
   - 7.3
@@ -35,9 +36,13 @@ matrix:
     - php: 7.1
       env: PHPUNIT_VERSION=dev-master
     - php: 7.1
+      env: PHPUNIT_VERSION=~8.1.0
+    - php: 7.1
       env: PHPUNIT_VERSION=~8.0.0
     - php: 7
       env: PHPUNIT_VERSION=dev-master
+    - php: 7
+      env: PHPUNIT_VERSION=~8.1.0
     - php: 7
       env: PHPUNIT_VERSION=~8.0.0
     - php: 7
