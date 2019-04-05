@@ -42,6 +42,13 @@ if (! interface_exists(\PHPUnit\Framework\MockObject\Stub\MatcherCollection::cla
     );
 }
 
+if (! class_exists(\PHPUnit\Framework\MockObject\InvocationMocker::class)) {
+    class_alias(
+        \PHPUnit_Framework_MockObject_InvocationMocker::class,
+        \PHPUnit\Framework\MockObject\InvocationMocker::class
+    );
+}
+
 if (! class_exists(\PHPUnit\Framework\BaseTestListener::class)) {
     include __DIR__ . '/compatibility/BaseTestListener.php';
     class_alias(
