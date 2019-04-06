@@ -14,7 +14,7 @@ use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class DefaultArgumentRemover implements InvocationInterface
+class DefaultArgumentRemoverNoReturnTypes implements InvocationInterface
 {
 
     /**

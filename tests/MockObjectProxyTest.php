@@ -66,13 +66,13 @@ class MockObjectProxyTest extends TestCase
     public function testHasMatcher()
     {
         $prophecy = $this->prophesize(MockObject::class);
-        $prophecy->__phpunit_hasMatchers()->willReturn("foo");
+        $prophecy->__phpunit_hasMatchers()->willReturn(true);
         $mock = $prophecy->reveal();
 
         $proxy = new MockObjectProxy($mock);
 
         $result = $proxy->__phpunit_hasMatchers();
-        $this->assertEquals("foo", $result);
+        $this->assertTrue($result);
     }
 
     /**
@@ -84,16 +84,23 @@ class MockObjectProxyTest extends TestCase
      * @test
      * @dataProvider provideTestProxiedMethods
      */
-    public function testProxiedMethods($method, array $arguments = [], $expected = "foo")
+    public function testProxiedMethods($method, array $arguments = [], $expected = null)
     {
         $prophecy = $this->prophesize(MockObject::class);
-        call_user_func_array([$prophecy, $method], $arguments)->willReturn($expected);
+        if ($expected) {
+            call_user_func_array([$prophecy, $method], $arguments)->willReturn($expected)->shouldBeCalledTimes(1);
+        } else {
+            call_user_func_array([$prophecy, $method], $arguments)->shouldBeCalledTimes(1);
+        }
         $mock = $prophecy->reveal();
 
         $proxy = new MockObjectProxy($mock);
 
         $result = call_user_func_array([$proxy, $method], $arguments);
-        $this->assertEquals($expected, $result);
+
+        if ($expected) {
+            $this->assertSame($expected, $result);
+        }
     }
 
     /**
@@ -104,9 +111,9 @@ class MockObjectProxyTest extends TestCase
     public function provideTestProxiedMethods()
     {
         return [
-            ["__phpunit_getInvocationMocker"],
-            ["__phpunit_setOriginalObject", ["bar"]],
-            ["__phpunit_verify", [true]],
+            ['__phpunit_getInvocationMocker', [], new \PHPUnit\Framework\MockObject\InvocationMocker([], true)],
+            ['__phpunit_setOriginalObject', ['bar']],
+            ['__phpunit_verify', [true]],
         ];
     }
 }
