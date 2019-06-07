@@ -29,8 +29,15 @@ class DefaultArgumentRemoverReturnTypes implements InvocationInterface
      */
     public function matches(Invocation $invocation) : bool
     {
-        if ($invocation instanceof Invocation\StaticInvocation) {
-            $this->removeDefaultArguments($invocation);
+        $iClass = class_exists(Invocation::class);
+
+        if ($invocation instanceof Invocation\StaticInvocation
+            || $iClass
+        ) {
+            $this->removeDefaultArguments(
+                $invocation,
+                $iClass ? Invocation::class : Invocation\StaticInvocation::class
+            );
         } else {
             MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
         }
@@ -64,12 +71,12 @@ class DefaultArgumentRemoverReturnTypes implements InvocationInterface
      *
      * @SuppressWarnings(PHPMD)
      */
-    private function removeDefaultArguments(Invocation\StaticInvocation $invocation)
+    private function removeDefaultArguments(Invocation $invocation, string $class)
     {
         $remover = function () {
             MockFunctionGenerator::removeDefaultArguments($this->parameters);
         };
 
-        $remover->bindTo($invocation, Invocation\StaticInvocation::class)();
+        $remover->bindTo($invocation, $class)();
     }
 }

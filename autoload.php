@@ -7,7 +7,9 @@ if (! interface_exists(\PHPUnit\Framework\MockObject\Matcher\Invocation::class))
     );
 }
 
-if (! interface_exists(\PHPUnit\Framework\MockObject\Invocation::class)) {
+if (! interface_exists(\PHPUnit\Framework\MockObject\Invocation::class)
+    && interface_exists(\PHPUnit\Framework\MockObject\Invocation::class)
+) {
     class_alias(
         \PHPUnit_Framework_MockObject_Invocation::class,
         \PHPUnit\Framework\MockObject\Invocation::class
