@@ -22,13 +22,14 @@ env:
   - PHPUNIT_VERSION=~7.5.0
   - PHPUNIT_VERSION=~8.0.0
   - PHPUNIT_VERSION=~8.1.0
+  - PHPUNIT_VERSION=~8.2.0
 
 php:
+  - 7.4-snapshot
   - 7.3
   - 7.2
   - 7.1
   - 7
-  - hhvm
 
 matrix:
   fast_finish: true
@@ -36,11 +37,15 @@ matrix:
     - php: 7.1
       env: PHPUNIT_VERSION=dev-master
     - php: 7.1
+      env: PHPUNIT_VERSION=~8.2.0
+    - php: 7.1
       env: PHPUNIT_VERSION=~8.1.0
     - php: 7.1
       env: PHPUNIT_VERSION=~8.0.0
     - php: 7
       env: PHPUNIT_VERSION=dev-master
+    - php: 7
+      env: PHPUNIT_VERSION=~8.2.0
     - php: 7
       env: PHPUNIT_VERSION=~8.1.0
     - php: 7
@@ -58,7 +63,7 @@ matrix:
     - php: 7
       env: PHPUNIT_VERSION=~7.0.0
   allow_failures:
-    - php: hhvm
+    - php: 7.4-snapshot
     - env: PHPUNIT_VERSION=dev-master
 
 install:
