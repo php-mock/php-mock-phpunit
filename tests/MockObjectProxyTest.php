@@ -2,13 +2,15 @@
 
 namespace phpmock\phpunit;
 
-use PHPUnit\Framework\MockObject\Matcher\MethodName;
-use PHPUnit\Framework\MockObject\Stub\MatcherCollection;
-use PHPUnit\Framework\TestCase;
 use phpmock\integration\MockDelegateFunctionBuilder;
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
+use PHPUnit\Framework\MockObject\ConfigurableMethod;
 use PHPUnit\Framework\MockObject\Matcher\Invocation;
+use PHPUnit\Framework\MockObject\Matcher\MethodName;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub\MatcherCollection;
+use PHPUnit\Framework\TestCase;
+use SebastianBergmann\Type\Type;
 
 /**
  * Tests MockObjectProxyTest.
@@ -31,10 +33,17 @@ class MockObjectProxyTest extends TestCase
     {
         $matcher = $this->getMockBuilder(Invocation::class)->getMock();
 
+        $methods = class_exists(ConfigurableMethod::class)
+            ? new ConfigurableMethod(
+                MockDelegateFunctionBuilder::METHOD,
+                $this->prophesize(Type::class)->reveal()
+            )
+            : [MockDelegateFunctionBuilder::METHOD];
+
         $invocationMocker = new InvocationMocker(
             $this->prophesize(MatcherCollection::class)->reveal(),
             $this->prophesize(Invocation::class)->reveal(),
-            [MockDelegateFunctionBuilder::METHOD]
+            $methods
         );
 
         $prophecy = $this->prophesize(MockObject::class);
