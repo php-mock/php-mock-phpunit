@@ -30,8 +30,8 @@ class DefaultArgumentRemoverReturnTypes implements InvocationInterface
     {
         $iClass = class_exists(Invocation::class);
 
-        if ($invocation instanceof Invocation\StaticInvocation
-            || $iClass
+        if ($iClass
+            || $invocation instanceof Invocation\StaticInvocation
         ) {
             $this->removeDefaultArguments(
                 $invocation,

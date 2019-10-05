@@ -30,8 +30,8 @@ class DefaultArgumentRemoverReturnTypes84 extends InvocationOrder
     {
         $iClass = class_exists(Invocation::class);
 
-        if ($invocation instanceof Invocation\StaticInvocation
-            || $iClass
+        if ($iClass
+            || $invocation instanceof Invocation\StaticInvocation
         ) {
             $this->removeDefaultArguments(
                 $invocation,
