@@ -5,8 +5,7 @@ if (class_exists(\PHPUnit\Framework\MockObject\Rule\InvocationOrder::class)) {
         \PHPUnit\Framework\MockObject\Rule\InvocationOrder::class,
         \PHPUnit\Framework\MockObject\Matcher\Invocation::class
     );
-}
-elseif (! interface_exists(\PHPUnit\Framework\MockObject\Matcher\Invocation::class)) {
+} elseif (! interface_exists(\PHPUnit\Framework\MockObject\Matcher\Invocation::class)) {
     class_alias(
         \PHPUnit_Framework_MockObject_Matcher_Invocation::class,
         \PHPUnit\Framework\MockObject\Matcher\Invocation::class
@@ -51,7 +50,8 @@ if (! class_exists(\PHPUnit\Framework\MockObject\Matcher\MethodName::class)) {
 }
 
 if (!class_exists(\PHPUnit\Framework\MockObject\InvocationHandler::class)
-    && !interface_exists(\PHPUnit\Framework\MockObject\Stub\MatcherCollection::class)) {
+    && !interface_exists(\PHPUnit\Framework\MockObject\Stub\MatcherCollection::class)
+) {
     class_alias(
         \PHPUnit_Framework_MockObject_Stub_MatcherCollection::class,
         \PHPUnit\Framework\MockObject\Stub\MatcherCollection::class
@@ -59,7 +59,8 @@ if (!class_exists(\PHPUnit\Framework\MockObject\InvocationHandler::class)
 }
 
 if (!class_exists(\PHPUnit\Framework\MockObject\InvocationHandler::class)
-    && !class_exists(\PHPUnit\Framework\MockObject\InvocationMocker::class)) {
+    && !class_exists(\PHPUnit\Framework\MockObject\InvocationMocker::class)
+) {
     class_alias(
         \PHPUnit_Framework_MockObject_InvocationMocker::class,
         \PHPUnit\Framework\MockObject\InvocationMocker::class

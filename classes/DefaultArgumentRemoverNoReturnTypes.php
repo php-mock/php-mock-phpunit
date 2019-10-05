@@ -16,7 +16,6 @@ use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
  */
 class DefaultArgumentRemoverNoReturnTypes implements InvocationInterface
 {
-
     /**
      * @SuppressWarnings(PHPMD)
      */

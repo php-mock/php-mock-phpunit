@@ -16,7 +16,6 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  */
 class MockObjectProxyNoReturnTypes implements MockObject
 {
-    
     /**
      * @var MockObject $mockObject The mock object.
      */

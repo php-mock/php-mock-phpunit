@@ -18,7 +18,6 @@ use PHPUnit\Framework\Test;
  */
 class MockDisablerPHPUnit7 extends BaseTestListener
 {
-
     /**
      * @var Deactivatable The function mocks.
      */

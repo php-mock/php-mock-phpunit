@@ -18,12 +18,11 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  */
 class MockObjectProxyReturnTypes implements MockObject
 {
-    
     /**
      * @var MockObject $mockObject The mock object.
      */
     private $mockObject;
-    
+
     /**
      * Inject the subject.
      *
@@ -33,7 +32,7 @@ class MockObjectProxyReturnTypes implements MockObject
     {
         $this->mockObject = $mockObject;
     }
-    
+
     /**
      * @SuppressWarnings(PHPMD)
      */
