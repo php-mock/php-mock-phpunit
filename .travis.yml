@@ -8,6 +8,8 @@ cache:
 
 env:
   - PHPUNIT_VERSION=dev-master
+  - PHPUNIT_VERSION=~8.4.0
+  - PHPUNIT_VERSION=~8.3.0
   - PHPUNIT_VERSION=~8.2.0
   - PHPUNIT_VERSION=~8.1.0
   - PHPUNIT_VERSION=~8.0.0
@@ -37,6 +39,10 @@ matrix:
     - php: 7.1
       env: PHPUNIT_VERSION=dev-master
     - php: 7.1
+      env: PHPUNIT_VERSION=~8.4.0
+    - php: 7.1
+      env: PHPUNIT_VERSION=~8.3.0
+    - php: 7.1
       env: PHPUNIT_VERSION=~8.2.0
     - php: 7.1
       env: PHPUNIT_VERSION=~8.1.0
@@ -44,6 +50,10 @@ matrix:
       env: PHPUNIT_VERSION=~8.0.0
     - php: 7
       env: PHPUNIT_VERSION=dev-master
+    - php: 7
+      env: PHPUNIT_VERSION=~8.4.0
+    - php: 7
+      env: PHPUNIT_VERSION=~8.3.0
     - php: 7
       env: PHPUNIT_VERSION=~8.2.0
     - php: 7
