@@ -4,7 +4,7 @@ namespace phpmock\phpunit;
 
 use phpmock\generator\MockFunctionGenerator;
 use PHPUnit\Framework\MockObject\Invocation;
-use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
+use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
 
 /**
  * Removes default arguments from the invocation.
@@ -14,12 +14,12 @@ use PHPUnit\Framework\MockObject\Matcher\Invocation as InvocationInterface;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class DefaultArgumentRemoverReturnTypes implements InvocationInterface
+class DefaultArgumentRemoverReturnTypes84 extends InvocationOrder
 {
     /**
      * @SuppressWarnings(PHPMD)
      */
-    public function invoked(Invocation $invocation)
+    public function invokedDo(Invocation $invocation)
     {
     }
 
@@ -47,7 +47,7 @@ class DefaultArgumentRemoverReturnTypes implements InvocationInterface
     public function verify() : void
     {
     }
-    
+
     /**
      * This method is not defined in the interface, but used in
      * PHPUnit_Framework_MockObject_InvocationMocker::hasMatchers().

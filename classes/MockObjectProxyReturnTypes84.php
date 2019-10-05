@@ -3,8 +3,8 @@
 namespace phpmock\phpunit;
 
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker as BuilderInvocationMocker;
-use PHPUnit\Framework\MockObject\InvocationMocker;
-use PHPUnit\Framework\MockObject\Matcher\Invocation;
+use PHPUnit\Framework\MockObject\InvocationHandler;
+use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
 use PHPUnit\Framework\MockObject\MockObject;
 use phpmock\integration\MockDelegateFunctionBuilder;
 
@@ -16,7 +16,7 @@ use phpmock\integration\MockDelegateFunctionBuilder;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @internal
  */
-class MockObjectProxyReturnTypes implements MockObject
+class MockObjectProxyReturnTypes84 implements MockObject
 {
     /**
      * @var MockObject $mockObject The mock object.
@@ -37,10 +37,9 @@ class MockObjectProxyReturnTypes implements MockObject
      * @SuppressWarnings(PHPMD)
      */
     // @codingStandardsIgnoreStart
-    public function __phpunit_getInvocationMocker() : InvocationMocker
+    public function __phpunit_getInvocationHandler(): InvocationHandler
     {
-        // @codingStandardsIgnoreEnd
-        return $this->mockObject->__phpunit_getInvocationMocker();
+        return $this->mockObject->__phpunit_getInvocationHandler();
     }
 
     /**
@@ -63,11 +62,11 @@ class MockObjectProxyReturnTypes implements MockObject
         $this->mockObject->__phpunit_verify($unsetInvocationMocker);
     }
 
-    public function expects(Invocation $matcher) : BuilderInvocationMocker
+    public function expects(InvocationOrder $matcher) : BuilderInvocationMocker
     {
         return $this->mockObject->expects($matcher)->method(MockDelegateFunctionBuilder::METHOD);
     }
-    
+
     /**
      * This method is not part of the contract but was found in
      * PHPUnit's mocked_class.tpl.dist.
