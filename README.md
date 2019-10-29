@@ -1,5 +1,11 @@
 # Mock PHP built-in functions with PHPUnit
 
+[![Latest Stable Version](https://poser.pugx.org/php-mock/php-mock-phpunit/v/stable)](https://packagist.org/packages/php-mock/php-mock-phpunit)
+[![Total Downloads](https://poser.pugx.org/php-mock/php-mock-phpunit/downloads)](https://packagist.org/packages/php-mock/php-mock-phpunit)
+[![Latest Unstable Version](https://poser.pugx.org/php-mock/php-mock-phpunit/v/unstable)](https://packagist.org/packages/php-mock/php-mock-phpunit)
+[![License](https://poser.pugx.org/php-mock/php-mock-phpunit/license)](https://packagist.org/packages/php-mock/php-mock-phpunit)
+[![Daily Downloads](https://poser.pugx.org/php-mock/php-mock-phpunit/d/daily)](https://packagist.org/packages/php-mock/php-mock-phpunit)
+
 This package integrates the function mock library
 [PHP-Mock](https://github.com/php-mock/php-mock) with PHPUnit.
 
