@@ -19,8 +19,8 @@
     },
     "require": {
         "php": ">=7",
-        "phpunit/phpunit": "^6 || ^7 || ^8",
-        "php-mock/php-mock-integration": "^2"
+        "phpunit/phpunit": "^6 || ^7 || ^8 || ^9",
+        "php-mock/php-mock-integration": "^2.1"
     },
     "archive": {
         "exclude": ["/tests"]
