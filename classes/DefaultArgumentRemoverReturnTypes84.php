@@ -38,7 +38,7 @@ class DefaultArgumentRemoverReturnTypes84 extends InvocationOrder
                 $iClass ? Invocation::class : Invocation\StaticInvocation::class
             );
         } else {
-            MockFunctionGenerator::removeDefaultArguments($invocation->parameters);
+            MockFunctionGenerator::removeDefaultArguments($invocation->getParameters());
         }
 
         return false;
