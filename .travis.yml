@@ -43,9 +43,23 @@ matrix:
   fast_finish: true
   exclude:
     - php: 8.0
+      env: PHPUNIT_VERSION=~9.2.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~9.1.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~9.0.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~8.4.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~8.3.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~8.2.0
+    - php: 8.0
       env: PHPUNIT_VERSION=~8.1.0
     - php: 8.0
       env: PHPUNIT_VERSION=~8.0.0
+    - php: 8.0
+      env: PHPUNIT_VERSION=~7.5.0
     - php: 8.0
       env: PHPUNIT_VERSION=~7.4.0
     - php: 8.0
