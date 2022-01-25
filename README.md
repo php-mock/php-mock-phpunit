@@ -1,9 +1,11 @@
+[![.github/workflows/tests.yml](https://github.com/php-mock/php-mock-phpunit/actions/workflows/tests.yml/badge.svg)](https://github.com/php-mock/php-mock-phpunit/actions/workflows/tests.yml)
+
 # Mock PHP built-in functions with PHPUnit
 
 This package integrates the function mock library
 [PHP-Mock](https://github.com/php-mock/php-mock) with PHPUnit.
 
-# Installation
+## Installation
 
 Use [Composer](https://getcomposer.org/):
 
@@ -11,7 +13,7 @@ Use [Composer](https://getcomposer.org/):
 composer require --dev php-mock/php-mock-phpunit
 ```
 
-# Usage
+## Usage
 
 PHP-Mock integrates with the trait
 [`PHPMock`](http://php-mock.github.io/php-mock-phpunit/api/class-phpmock.phpunit.PHPMock.html)
@@ -22,8 +24,6 @@ With this method you can build a mock in the way you are used to build a
 PHPUnit mock:
 
 ```php
-<?php
-
 namespace foo;
 
 class BuiltinTest extends \PHPUnit\Framework\TestCase
@@ -60,7 +60,7 @@ class BuiltinTest extends \PHPUnit\Framework\TestCase
 There's no need to disable the mocked function. The PHPUnit integration does
 that for you.
 
-## Restrictions
+### Restrictions
 
 This library comes with the same restrictions as the underlying
 [`php-mock`](https://github.com/php-mock/php-mock#requirements-and-restrictions):
@@ -77,15 +77,12 @@ This library comes with the same restrictions as the underlying
   This would define a side effectless namespaced function. Another effective
   approach is running your test in an isolated process (e.g. with `@runInSeparateProcess`).
 
-# License and authors
+## License and authors
 
 This project is free and under the WTFPL.
 Responsable for this project is Markus Malkusch markus@malkusch.de.
 
-## Donations
+### Donations
 
 If you like this project and feel generous donate a few Bitcoins here:
 [1335STSwu9hST4vcMRppEPgENMHD2r1REK](bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK)
-
-[![Build Status](https://travis-ci.org/php-mock/php-mock-phpunit.svg?branch=master)](https://travis-ci.org/php-mock/php-mock-phpunit)
-
