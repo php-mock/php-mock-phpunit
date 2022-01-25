@@ -252,7 +252,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
 
-      - name: Install
+      - name: Install Dependencies
         run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} squizlabs/php_codesniffer phpmd/phpmd
 
       - name: PHPUnit
