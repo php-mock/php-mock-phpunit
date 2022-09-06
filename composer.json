@@ -24,5 +24,8 @@
     },
     "archive": {
         "exclude": ["/tests"]
+    },
+    "require-dev": {
+        "phpspec/prophecy": "^1.15"
     }
 }
