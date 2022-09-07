@@ -23,7 +23,7 @@
         "php-mock/php-mock-integration": "^2.1"
     },
     "require-dev": {
-        "phpspec/prophecy": "^1.15"
+        "phpspec/prophecy": "^1.10.3"
     },
     "archive": {
         "exclude": ["/tests"]
