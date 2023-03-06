@@ -48,8 +48,8 @@ class MockObjectProxyTest extends TestCase
             $invocationMocker = $invocationHandler->expects($matcher);
         } else {
             $invocationMocker = new InvocationMocker(
-                Mockery::mock(MatcherCollection::class),
-                Mockery::mock(Invocation::class),
+                $this->getMockBuilder(MatcherCollection::class)->getMock(),
+                $this->getMockBuilder(Invocation::class)->getMock(),
                 $methods
             );
         }
