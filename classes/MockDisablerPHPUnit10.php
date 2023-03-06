@@ -33,6 +33,9 @@ class MockDisablerPHPUnit10 implements FinishedSubscriber
         $this->deactivatable = $deactivatable;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD)
+     */
     public function notify(Finished $event) : void
     {
         $this->deactivatable->disable();

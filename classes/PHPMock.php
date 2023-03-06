@@ -7,6 +7,7 @@ use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
 use PHPUnit\Framework\MockObject\MockObject;
+use ReflectionProperty;
 
 /**
  * Adds building a function mock functionality into \PHPUnit\Framework\TestCase.
@@ -95,10 +96,11 @@ trait PHPMock
     public function registerForTearDown(Deactivatable $deactivatable)
     {
         if (class_exists(Facade::class)) {
-            $property = new \ReflectionProperty(Facade::class, 'sealed');
+            $property = new ReflectionProperty(Facade::class, 'sealed');
             $property->setAccessible(true);
             $property->setValue(false);
 
+            /** @SuppressWarnings(PHPMD) */
             Facade::registerSubscriber(
                 new MockDisabler($deactivatable)
             );
