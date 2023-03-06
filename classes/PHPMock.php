@@ -92,6 +92,8 @@ trait PHPMock
      * directly created with PHPMock's API.
      *
      * @param Deactivatable $deactivatable The function mocks.
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function registerForTearDown(Deactivatable $deactivatable)
     {
@@ -100,7 +102,6 @@ trait PHPMock
             $property->setAccessible(true);
             $property->setValue(false);
 
-            /** @SuppressWarnings(PHPMD) */
             Facade::registerSubscriber(
                 new MockDisabler($deactivatable)
             );
