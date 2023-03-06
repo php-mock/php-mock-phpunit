@@ -100,7 +100,7 @@ trait PHPMock
             $property->setValue(false);
 
             Facade::registerSubscriber(
-                new MockDisabler($deactivatable),
+                new MockDisabler($deactivatable)
             );
 
             $property->setValue(true);
