@@ -67,7 +67,16 @@ if (!class_exists(\PHPUnit\Framework\MockObject\InvocationHandler::class)
     );
 }
 
-if (! class_exists(\PHPUnit\Framework\BaseTestListener::class)) {
+$hasVersion = class_exists(\PHPUnit\Runner\Version::class);
+
+if ($hasVersion
+    && version_compare(\PHPUnit\Runner\Version::id(), '10.0.0') >= 0
+) {
+    class_alias(
+        phpmock\phpunit\MockDisablerPHPUnit10::class,
+        phpmock\phpunit\MockDisabler::class
+    );
+} elseif (! class_exists(\PHPUnit\Framework\BaseTestListener::class)) {
     include __DIR__ . '/compatibility/BaseTestListener.php';
     class_alias(
         phpmock\phpunit\MockDisablerPHPUnit7::class,
@@ -80,12 +89,17 @@ if (! class_exists(\PHPUnit\Framework\BaseTestListener::class)) {
     );
 }
 
-if (class_exists(\PHPUnit\Runner\Version::class)
+if ($hasVersion
+    && version_compare(\PHPUnit\Runner\Version::id(), '10.0.0') >= 0
+) {
+    class_alias(\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::class, \phpmock\phpunit\DefaultArgumentRemover::class);
+    class_alias(\phpmock\phpunit\MockObjectProxyReturnTypes100::class, \phpmock\phpunit\MockObjectProxy::class);
+} elseif ($hasVersion
     && version_compare(\PHPUnit\Runner\Version::id(), '8.4.0') >= 0
 ) {
     class_alias(\phpmock\phpunit\DefaultArgumentRemoverReturnTypes84::class, \phpmock\phpunit\DefaultArgumentRemover::class);
     class_alias(\phpmock\phpunit\MockObjectProxyReturnTypes84::class, \phpmock\phpunit\MockObjectProxy::class);
-} elseif (class_exists(\PHPUnit\Runner\Version::class)
+} elseif ($hasVersion
     && version_compare(\PHPUnit\Runner\Version::id(), '8.1.0') >= 0
 ) {
     class_alias(\phpmock\phpunit\DefaultArgumentRemoverReturnTypes::class, \phpmock\phpunit\DefaultArgumentRemover::class);

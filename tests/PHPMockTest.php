@@ -2,7 +2,7 @@
 
 namespace phpmock\phpunit;
 
-use phpmock\AbstractMockTest;
+use phpmock\AbstractMockTestCase;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
@@ -13,7 +13,7 @@ use PHPUnit\Framework\ExpectationFailedException;
  * @license http://www.wtfpl.net/txt/copying/ WTFPL
  * @see PHPMock
  */
-class PHPMockTest extends AbstractMockTest
+class PHPMockTest extends AbstractMockTestCase
 {
 
     use PHPMock;

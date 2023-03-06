@@ -2,6 +2,7 @@
 
 namespace phpmock\phpunit;
 
+use Mockery;
 use phpmock\integration\MockDelegateFunctionBuilder;
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
 use PHPUnit\Framework\MockObject\ConfigurableMethod;
@@ -24,7 +25,6 @@ use SebastianBergmann\Type\Type;
  */
 class MockObjectProxyTest extends TestCase
 {
-
     /**
      * Tests expects()
      *
@@ -37,7 +37,7 @@ class MockObjectProxyTest extends TestCase
         $methods = class_exists(ConfigurableMethod::class)
             ? new ConfigurableMethod(
                 MockDelegateFunctionBuilder::METHOD,
-                $this->prophesize(Type::class)->reveal()
+                Mockery::mock(Type::class)
             )
             : [MockDelegateFunctionBuilder::METHOD];
 
@@ -48,15 +48,14 @@ class MockObjectProxyTest extends TestCase
             $invocationMocker = $invocationHandler->expects($matcher);
         } else {
             $invocationMocker = new InvocationMocker(
-                $this->prophesize(MatcherCollection::class)->reveal(),
-                $this->prophesize(Invocation::class)->reveal(),
+                $this->getMockBuilder(MatcherCollection::class)->getMock(),
+                $this->getMockBuilder(Invocation::class)->getMock(),
                 $methods
             );
         }
 
-        $prophecy = $this->prophesize(MockObject::class);
-        $prophecy->expects($matcher)->willReturn($invocationMocker);
-        $mock = $prophecy->reveal();
+        $mock = Mockery::mock(MockObject::class);
+        $mock->shouldReceive('expects')->with($matcher)->andReturn($invocationMocker);
 
         $proxy = new MockObjectProxy($mock);
 
@@ -71,7 +70,18 @@ class MockObjectProxyTest extends TestCase
 
     private function getMethodMatcher($invocationMocker)
     {
-        if (class_exists(\PHPUnit\Runner\Version::class)
+        $hasVersion = class_exists(\PHPUnit\Runner\Version::class);
+
+        if ($hasVersion
+            && version_compare(\PHPUnit\Runner\Version::id(), '10.0.0') >= 0
+        ) {
+            $reflection = new \ReflectionClass(InvocationMocker::class);
+            $property = $reflection->getProperty('matcher');
+            $property->setAccessible(true);
+            return $property->getValue($invocationMocker)->methodNameRule();
+        }
+
+        if ($hasVersion
             && version_compare(\PHPUnit\Runner\Version::id(), '8.4.0') >= 0
         ) {
             $reflection = new \ReflectionClass(InvocationMocker::class);
@@ -96,9 +106,8 @@ class MockObjectProxyTest extends TestCase
      */
     public function testHasMatcher()
     {
-        $prophecy = $this->prophesize(MockObject::class);
-        $prophecy->__phpunit_hasMatchers()->willReturn(true);
-        $mock = $prophecy->reveal();
+        $mock = Mockery::mock(MockObject::class);
+        $mock->shouldReceive('__phpunit_hasMatchers')->andReturn(true);
 
         $proxy = new MockObjectProxy($mock);
 
@@ -117,13 +126,12 @@ class MockObjectProxyTest extends TestCase
      */
     public function testProxiedMethods($method, array $arguments = [], $expected = null)
     {
-        $prophecy = $this->prophesize(MockObject::class);
+        $mock = Mockery::mock(MockObject::class);
         if ($expected) {
-            call_user_func_array([$prophecy, $method], $arguments)->willReturn($expected)->shouldBeCalledTimes(1);
+            $mock->shouldReceive($method)->withArgs($arguments)->andReturn($expected)->times(1);
         } else {
-            call_user_func_array([$prophecy, $method], $arguments)->shouldBeCalledTimes(1);
+            $mock->shouldReceive($method)->withArgs($arguments)->times(1);
         }
-        $mock = $prophecy->reveal();
 
         $proxy = new MockObjectProxy($mock);
 
@@ -141,7 +149,7 @@ class MockObjectProxyTest extends TestCase
      *
      * @SuppressWarnings(PHPMD)
      */
-    public function provideTestProxiedMethods()
+    public static function provideTestProxiedMethods()
     {
         $return = [];
         if (class_exists(\PHPUnit\Runner\Version::class)
@@ -156,7 +164,7 @@ class MockObjectProxyTest extends TestCase
             ];
         }
 
-        $return[] = ['__phpunit_setOriginalObject', ['bar']];
+        $return[] = ['__phpunit_setOriginalObject', [new \stdClass()]];
         $return[] = ['__phpunit_verify', [true]];
         return $return;
     }
