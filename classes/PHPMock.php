@@ -98,15 +98,17 @@ trait PHPMock
     public function registerForTearDown(Deactivatable $deactivatable)
     {
         if (class_exists(Facade::class)) {
+            $facade = Facade::instance();
+
             $property = new ReflectionProperty(Facade::class, 'sealed');
             $property->setAccessible(true);
-            $property->setValue(Facade::instance(), false);
+            $property->setValue($facade, false);
 
-            Facade::instance()->registerSubscriber(
+            $facade->registerSubscriber(
                 new MockDisabler($deactivatable)
             );
 
-            $property->setValue(true);
+            $property->setValue($facade, true);
 
             return;
         }
