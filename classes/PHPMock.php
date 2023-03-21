@@ -100,7 +100,7 @@ trait PHPMock
         if (class_exists(Facade::class)) {
             $property = new ReflectionProperty(Facade::class, 'sealed');
             $property->setAccessible(true);
-            $property->setValue(false);
+            $property->setValue(Facade::instance(), false);
 
             Facade::registerSubscriber(
                 new MockDisabler($deactivatable)
