@@ -168,11 +168,10 @@ trait PHPMock
      */
     private function prepareCustomTemplates()
     {
-        if ($this->shouldPrepareCustomTemplates() &&
-            !(is_dir(static::$templatesPath) &&
-                ($phpunitTemplatesDir = $this->getPhpunitTemplatesDir())
-            )
-        ) {
+        if (!($this->shouldPrepareCustomTemplates() &&
+            is_dir(static::$templatesPath) &&
+            ($phpunitTemplatesDir = $this->getPhpunitTemplatesDir())
+        )) {
             return;
         }
 
