@@ -7,8 +7,8 @@ use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
-use PHPUnit\Framework\MockObject\Generator\MockMethod;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Runner\Version;
 use ReflectionClass;
 use ReflectionProperty;
 use SebastianBergmann\Template\Template;
@@ -42,6 +42,12 @@ use SebastianBergmann\Template\Template;
  */
 trait PHPMock
 {
+    public static $templatesPath = '/tmp';
+
+    const OPEN_INVOCATION = 'new \PHPUnit\Framework\MockObject\Invocation(';
+    const OPEN_WRAPPER = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection(';
+    const CLOSE_FUNC = ')';
+
     /**
      * Returns the enabled function mock.
      *
@@ -157,50 +163,111 @@ trait PHPMock
      * possible to remove optional parameters when it is declared read-only.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
      */
     private function prepareCustomTemplates()
+    {
+        if (!(is_dir(static::$templatesPath) && ($phpunitTemplatesDir = $this->getPhpunitTemplatesDir()))) {
+            return;
+        }
+
+        $templatesDir = realpath(static::$templatesPath);
+        $directoryIterator = new DirectoryIterator($phpunitTemplatesDir);
+
+        $templates = [];
+
+        $prefix = 'phpmock-phpunit-' . Version::id() . '-';
+
+        foreach ($directoryIterator as $fileinfo) {
+            if ($fileinfo->getExtension() !== 'tpl') {
+                continue;
+            }
+
+            $filename = $fileinfo->getFilename();
+            $customTemplateFile = $templatesDir . DIRECTORY_SEPARATOR . $prefix . $filename;
+            $templateFile = $phpunitTemplatesDir . DIRECTORY_SEPARATOR . $filename;
+
+            $this->createCustomTemplateFile($templateFile, $customTemplateFile);
+
+            if (file_exists($customTemplateFile)) {
+                $templates[$templateFile] = new Template($customTemplateFile);
+            }
+        }
+
+        $mockMethodClasses = [
+            'PHPUnit\\Framework\\MockObject\\Generator\\MockMethod',
+            'PHPUnit\\Framework\\MockObject\\MockMethod',
+        ];
+
+        foreach ($mockMethodClasses as $mockMethodClass) {
+            if (class_exists($mockMethodClass)) {
+                $reflection = new ReflectionClass($mockMethodClass);
+
+                $reflectionTemplates = $reflection->getProperty('templates');
+                $reflectionTemplates->setAccessible(true);
+
+                $reflectionTemplates->setValue($templates);
+
+                break;
+            }
+        }
+    }
+
+    /**
+     * Detects the PHPUnit templates dir
+     *
+     * @return string|null
+     */
+    private function getPhpunitTemplatesDir()
     {
         $phpunitLocations = [
             __DIR__ . '/../../',
             __DIR__ . '/../vendor/',
         ];
 
-        $phpunitRelativePath = '/phpunit/phpunit/src/Framework/MockObject/Generator/templates';
+        $phpunitRelativePath = '/phpunit/phpunit/src/Framework/MockObject/Generator';
 
         foreach ($phpunitLocations as $prefix) {
-            if (is_dir($prefix . $phpunitRelativePath)) {
-                $phpunitTemplatesDir = realpath($prefix . $phpunitRelativePath);
+            $possibleDirs = [
+                $prefix . $phpunitRelativePath . '/templates',
+                $prefix . $phpunitRelativePath,
+            ];
 
-                break;
+            foreach ($possibleDirs as $dir) {
+                if (is_dir($dir)) {
+                    return realpath($dir);
+                }
             }
         }
+    }
 
-        if (empty($phpunitTemplatesDir)) {
-            return;
-        }
+    /**
+     * Clones original template with the wrapper
+     *
+     * @param string $templateFile Template filename
+     * @param string $customTemplateFile Custom template filename
+     *
+     * @return void
+     *
+     * @SuppressWarnings(PHPMD.IfStatementAssignment)
+     */
+    private function createCustomTemplateFile(string $templateFile, string $customTemplateFile)
+    {
+        $template = file_get_contents($templateFile);
 
-        $templatesDir = realpath(__DIR__ . '/../templates');
-        $dir = new DirectoryIterator($templatesDir);
+        if (
+            ($start = strpos($template, static::OPEN_INVOCATION)) !== false &&
+            ($end = strpos($template, static::CLOSE_FUNC, $start)) !== false
+        ) {
+            $template = substr_replace($template, static::CLOSE_FUNC, $end, 0);
+            $template = substr_replace($template, static::OPEN_WRAPPER, $start, 0);
 
-        $templates = [];
-
-        foreach ($dir as $fileinfo) {
-            if ($fileinfo->isDot()) {
-                continue;
+            if ($file = fopen($customTemplateFile, 'w+')) {
+                fputs($file, $template);
+                fclose($file);
             }
-
-            $filename = $fileinfo->getFilename();
-            $template = $phpunitTemplatesDir . DIRECTORY_SEPARATOR . $filename;
-            $customTemplate = $templatesDir . DIRECTORY_SEPARATOR . $filename;
-
-            $templates[$template] = new Template($customTemplate);
         }
-
-        $ref = new ReflectionClass(MockMethod::class);
-
-        $prop = $ref->getProperty('templates');
-        $prop->setAccessible(true);
-
-        $prop->setValue($templates);
     }
 }
