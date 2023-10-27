@@ -45,7 +45,7 @@ trait PHPMock
     public static $templatesPath = '/tmp';
 
     private $openInvocation = 'new \PHPUnit\Framework\MockObject\Invocation(';
-    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemover::removeDefaultArgumentsWithReflection('; // phpcs:ignore
+    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemover::removeDefaultArgumentsWithReflection(';
     private $closeFunc = ')';
 
     /**
