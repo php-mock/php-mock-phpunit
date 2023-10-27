@@ -45,7 +45,7 @@ trait PHPMock
     public static $templatesPath = '/tmp';
 
     private $openInvocation = 'new \PHPUnit\Framework\MockObject\Invocation(';
-    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection(';
+    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection('; // phpcs:ignore
     private $closeFunc = ')';
 
     /**
@@ -257,6 +257,7 @@ trait PHPMock
     {
         $template = file_get_contents($templateFile);
 
+        // phpcs:disable
         if (
             ($start = strpos($template, $this->openInvocation)) !== false &&
             ($end = strpos($template, $this->closeFunc, $start)) !== false
@@ -269,5 +270,6 @@ trait PHPMock
                 fclose($file);
             }
         }
+        // phpcs:enable
     }
 }
