@@ -8,7 +8,6 @@ use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Runner\Version;
 use ReflectionClass;
 use ReflectionProperty;
 use SebastianBergmann\Template\Template;
@@ -44,8 +43,9 @@ trait PHPMock
 {
     public static $templatesPath = '/tmp';
 
-    private $openInvocation = 'new \PHPUnit\Framework\MockObject\Invocation(';
-    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemover::removeDefaultArgumentsWithReflection(';
+    private $phpunitVersionClass = '\\PHPUnit\\Runner\\Version';
+    private $openInvocation = 'new \\PHPUnit\\Framework\\MockObject\\Invocation(';
+    private $openWrapper = '\\phpmock\\phpunit\\DefaultArgumentRemover::removeDefaultArgumentsWithReflection(';
     private $closeFunc = ')';
 
     /**
@@ -180,7 +180,7 @@ trait PHPMock
 
         $templates = [];
 
-        $prefix = 'phpmock-phpunit-' . Version::id() . '-';
+        $prefix = 'phpmock-phpunit-' . $this->getPhpUnitVersion() . '-';
 
         foreach ($directoryIterator as $fileinfo) {
             if ($fileinfo->getExtension() !== 'tpl') {
@@ -219,10 +219,13 @@ trait PHPMock
 
     private function shouldPrepareCustomTemplates()
     {
-        $phpunitVersionClass = 'PHPUnit\\Runner\\Version';
+        return class_exists($this->phpunitVersionClass)
+            && version_compare($this->getPhpUnitVersion(), '10.0.0') >= 0;
+    }
 
-        return class_exists($phpunitVersionClass)
-            && version_compare(call_user_func([$phpunitVersionClass, 'id']), '10.0.0') >= 0;
+    private function getPhpUnitVersion()
+    {
+        return call_user_func([$this->phpunitVersionClass, 'id']);
     }
 
     /**
