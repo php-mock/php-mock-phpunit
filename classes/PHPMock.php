@@ -45,7 +45,7 @@ trait PHPMock
     public static $templatesPath = '/tmp';
 
     private $openInvocation = 'new \PHPUnit\Framework\MockObject\Invocation(';
-    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection('; // phpcs:ignore
+    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemover::removeDefaultArgumentsWithReflection('; // phpcs:ignore
     private $closeFunc = ')';
 
     /**
@@ -82,8 +82,7 @@ trait PHPMock
 
         $this->registerForTearDown($functionMock);
 
-        $proxy = new MockObjectProxy($mock);
-        return $proxy;
+        return new MockObjectProxy($mock);
     }
 
     private function addMatcher($mock, $name)
@@ -169,7 +168,11 @@ trait PHPMock
      */
     private function prepareCustomTemplates()
     {
-        if (!(is_dir(static::$templatesPath) && ($phpunitTemplatesDir = $this->getPhpunitTemplatesDir()))) {
+        if ($this->shouldPrepareCustomTemplates() &&
+            !(is_dir(static::$templatesPath) &&
+                ($phpunitTemplatesDir = $this->getPhpunitTemplatesDir())
+            )
+        ) {
             return;
         }
 
@@ -215,6 +218,14 @@ trait PHPMock
         }
     }
 
+    private function shouldPrepareCustomTemplates()
+    {
+        $phpunitVersionClass = 'PHPUnit\\Runner\\Version';
+
+        return class_exists($phpunitVersionClass)
+            && version_compare(call_user_func([$phpunitVersionClass, 'id']), '10.0.0') >= 0;
+    }
+
     /**
      * Detects the PHPUnit templates dir
      *
@@ -257,9 +268,7 @@ trait PHPMock
     {
         $template = file_get_contents($templateFile);
 
-        // phpcs:disable
-        if (
-            ($start = strpos($template, $this->openInvocation)) !== false &&
+        if (($start = strpos($template, $this->openInvocation)) !== false &&
             ($end = strpos($template, $this->closeFunc, $start)) !== false
         ) {
             $template = substr_replace($template, $this->closeFunc, $end, 0);
@@ -270,6 +279,5 @@ trait PHPMock
                 fclose($file);
             }
         }
-        // phpcs:enable
     }
 }
