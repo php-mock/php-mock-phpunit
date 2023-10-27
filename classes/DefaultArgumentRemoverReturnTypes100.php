@@ -87,7 +87,7 @@ class DefaultArgumentRemoverReturnTypes100 extends InvocationOrder
     /**
      * Alternative to remove default arguments from StaticInvocation or its children (hack)
      *
-     * @SuppressWarnings(PHPMD)
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public static function removeDefaultArgumentsWithReflection(Invocation $invocation): Invocation
     {
@@ -95,25 +95,25 @@ class DefaultArgumentRemoverReturnTypes100 extends InvocationOrder
             return $invocation;
         }
 
-        $refClass = new ReflectionClass($invocation);
+        $reflection = new ReflectionClass($invocation);
 
-        $refReturnType = $refClass->getProperty('returnType');
-        $refReturnType->setAccessible(true);
+        $reflectionReturnType = $reflection->getProperty('returnType');
+        $reflectionReturnType->setAccessible(true);
 
-        $refIsReturnTypeNullable = $refClass->getProperty('isReturnTypeNullable');
-        $refIsReturnTypeNullable->setAccessible(true);
+        $reflectionIsOptional = $reflection->getProperty('isReturnTypeNullable');
+        $reflectionIsOptional->setAccessible(true);
 
-        $refProxiedCall = $refClass->getProperty('proxiedCall');
-        $refProxiedCall->setAccessible(true);
+        $reflectionIsProxied = $reflection->getProperty('proxiedCall');
+        $reflectionIsProxied->setAccessible(true);
 
-        $parameters = $invocation->parameters();
-        $returnType = $refReturnType->getValue($invocation);
-        $proxiedCall = $refProxiedCall->getValue($invocation);
+        $returnType = $reflectionReturnType->getValue($invocation);
+        $proxiedCall = $reflectionIsProxied->getValue($invocation);
 
-        if ($refIsReturnTypeNullable->getValue($invocation)) {
+        if ($reflectionIsOptional->getValue($invocation)) {
             $returnType = '?' . $returnType;
         }
 
+        $parameters = $invocation->parameters();
         MockFunctionGenerator::removeDefaultArguments($parameters);
 
         return new Invocation(

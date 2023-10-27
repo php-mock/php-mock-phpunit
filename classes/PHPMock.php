@@ -7,7 +7,9 @@ use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
+use PHPUnit\Framework\MockObject\Generator\MockMethod;
 use PHPUnit\Framework\MockObject\MockObject;
+use ReflectionClass;
 use ReflectionProperty;
 use SebastianBergmann\Template\Template;
 
@@ -52,7 +54,7 @@ trait PHPMock
      */
     public function getFunctionMock($namespace, $name)
     {
-        $this->forgeTemplates();
+        $this->prepareCustomTemplates();
 
         $delegateBuilder = new MockDelegateFunctionBuilder();
         $delegateBuilder->build($name);
@@ -150,7 +152,13 @@ trait PHPMock
                             ->define();
     }
 
-    protected function forgeTemplates()
+    /**
+     * Adds a wrapper method to the Invocable object instance that makes it
+     * possible to remove optional parameters when it is declared read-only.
+     *
+     * @return void
+     */
+    private function prepareCustomTemplates()
     {
         $phpunitLocations = [
             __DIR__ . '/../../',
@@ -188,13 +196,11 @@ trait PHPMock
             $templates[$template] = new Template($customTemplate);
         }
 
-        $ref = new \ReflectionClass(\PHPUnit\Framework\MockObject\Generator\MockMethod::class);
+        $ref = new ReflectionClass(MockMethod::class);
 
         $prop = $ref->getProperty('templates');
         $prop->setAccessible(true);
 
         $prop->setValue($templates);
-
-        $value = $prop->getValue();
     }
 }
