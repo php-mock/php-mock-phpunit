@@ -44,9 +44,9 @@ trait PHPMock
 {
     public static $templatesPath = '/tmp';
 
-    const OPEN_INVOCATION = 'new \PHPUnit\Framework\MockObject\Invocation(';
-    const OPEN_WRAPPER = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection(';
-    const CLOSE_FUNC = ')';
+    private $openInvocation = 'new \PHPUnit\Framework\MockObject\Invocation(';
+    private $openWrapper = '\phpmock\phpunit\DefaultArgumentRemoverReturnTypes100::removeDefaultArgumentsWithReflection(';
+    private $closeFunc = ')';
 
     /**
      * Returns the enabled function mock.
@@ -258,11 +258,11 @@ trait PHPMock
         $template = file_get_contents($templateFile);
 
         if (
-            ($start = strpos($template, static::OPEN_INVOCATION)) !== false &&
-            ($end = strpos($template, static::CLOSE_FUNC, $start)) !== false
+            ($start = strpos($template, $this->openInvocation)) !== false &&
+            ($end = strpos($template, $this->closeFunc, $start)) !== false
         ) {
-            $template = substr_replace($template, static::CLOSE_FUNC, $end, 0);
-            $template = substr_replace($template, static::OPEN_WRAPPER, $start, 0);
+            $template = substr_replace($template, $this->closeFunc, $end, 0);
+            $template = substr_replace($template, $this->openWrapper, $start, 0);
 
             if ($file = fopen($customTemplateFile, 'w+')) {
                 fputs($file, $template);
