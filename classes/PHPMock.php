@@ -2,12 +2,14 @@
 
 namespace phpmock\phpunit;
 
+use DirectoryIterator;
 use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
+use SebastianBergmann\Template\Template;
 
 /**
  * Adds building a function mock functionality into \PHPUnit\Framework\TestCase.
@@ -50,6 +52,8 @@ trait PHPMock
      */
     public function getFunctionMock($namespace, $name)
     {
+        $this->forgeTemplates();
+
         $delegateBuilder = new MockDelegateFunctionBuilder();
         $delegateBuilder->build($name);
 
@@ -144,5 +148,53 @@ trait PHPMock
                             })
                             ->build()
                             ->define();
+    }
+
+    protected function forgeTemplates()
+    {
+        $phpunitLocations = [
+            __DIR__ . '/../../',
+            __DIR__ . '/../vendor/',
+        ];
+
+        $phpunitRelativePath = '/phpunit/phpunit/src/Framework/MockObject/Generator/templates';
+
+        foreach ($phpunitLocations as $prefix) {
+            if (is_dir($prefix . $phpunitRelativePath)) {
+                $phpunitTemplatesDir = realpath($prefix . $phpunitRelativePath);
+
+                break;
+            }
+        }
+
+        if (empty($phpunitTemplatesDir)) {
+            return;
+        }
+
+        $templatesDir = realpath(__DIR__ . '/../templates');
+        $dir = new DirectoryIterator($templatesDir);
+
+        $templates = [];
+
+        foreach ($dir as $fileinfo) {
+            if ($fileinfo->isDot()) {
+                continue;
+            }
+
+            $filename = $fileinfo->getFilename();
+            $template = $phpunitTemplatesDir . DIRECTORY_SEPARATOR . $filename;
+            $customTemplate = $templatesDir . DIRECTORY_SEPARATOR . $filename;
+
+            $templates[$template] = new Template($customTemplate);
+        }
+
+        $ref = new \ReflectionClass(\PHPUnit\Framework\MockObject\Generator\MockMethod::class);
+
+        $prop = $ref->getProperty('templates');
+        $prop->setAccessible(true);
+
+        $prop->setValue($templates);
+
+        $value = $prop->getValue();
     }
 }
