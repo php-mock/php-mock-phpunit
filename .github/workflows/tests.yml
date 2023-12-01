@@ -424,7 +424,7 @@ jobs:
     name: PHPUnit ${{ matrix.phpunit-version }} on PHP ${{ matrix.php-version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -432,13 +432,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
 
       - name: Install Dependencies
-        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} squizlabs/php_codesniffer phpmd/phpmd
+        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress --no-suggest
 
       - name: PHPUnit
         run: vendor/bin/phpunit
-
-      - name: PHPCS
-        run: vendor/bin/phpcs --standard=PSR2 classes/ tests/
-
-      - name: PHPMD
-        run: vendor/bin/phpmd classes/ text cleancode,codesize,controversial,design,naming,unusedcode
