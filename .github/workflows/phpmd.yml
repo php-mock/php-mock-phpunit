@@ -20,7 +20,7 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
-        run: composer require phpmd/phpmd --no-interaction --no-progress --no-suggest
+        run: composer require phpmd/phpmd --no-interaction --no-progress
 
       - name: Run phpmd
         run: vendor/bin/phpmd classes/ text cleancode,codesize,controversial,design,naming,unusedcode
