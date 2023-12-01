@@ -34,12 +34,25 @@ class MockObjectProxyTest extends TestCase
     {
         $matcher = $this->getMockBuilder(Invocation::class)->getMock();
 
-        $methods = class_exists(ConfigurableMethod::class)
-            ? new ConfigurableMethod(
-                MockDelegateFunctionBuilder::METHOD,
-                Mockery::mock(Type::class)
-            )
-            : [MockDelegateFunctionBuilder::METHOD];
+        if (class_exists(ConfigurableMethod::class)) {
+            if (class_exists(\PHPUnit\Runner\Version::class)
+                && version_compare(\PHPUnit\Runner\Version::id(), '10.5.0') >= 0
+            ) {
+                $methods = new ConfigurableMethod(
+                    MockDelegateFunctionBuilder::METHOD,
+                    [],
+                    0,
+                    Mockery::mock(Type::class)
+                );
+            } else {
+                $methods = new ConfigurableMethod(
+                    MockDelegateFunctionBuilder::METHOD,
+                    Mockery::mock(Type::class)
+                );
+            }
+        } else {
+            $methods = [MockDelegateFunctionBuilder::METHOD];
+        }
 
         if (class_exists(\PHPUnit\Runner\Version::class)
             && version_compare(\PHPUnit\Runner\Version::id(), '8.4.0') >= 0

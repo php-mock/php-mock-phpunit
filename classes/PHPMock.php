@@ -210,7 +210,7 @@ trait PHPMock
                 $reflectionTemplates = $reflection->getProperty('templates');
                 $reflectionTemplates->setAccessible(true);
 
-                $reflectionTemplates->setValue($templates);
+                $reflectionTemplates->setValue(null, $templates);
 
                 break;
             }
