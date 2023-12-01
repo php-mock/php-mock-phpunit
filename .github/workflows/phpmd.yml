@@ -2,7 +2,10 @@ name: "Check phpmd"
 
 on:
   pull_request:
-  push:
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
   coding-standards:
