@@ -35,8 +35,6 @@ class PHPMockTest extends AbstractMockTestCase
 
     /**
      * Tests building a mock with arguments.
-     *
-     * @test
      */
     public function testFunctionMockWithArguments()
     {
@@ -48,8 +46,6 @@ class PHPMockTest extends AbstractMockTestCase
 
     /**
      * Tests failing an expectation.
-     *
-     * @test
      */
     public function testFunctionMockFailsExpectation()
     {

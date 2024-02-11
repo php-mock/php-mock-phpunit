@@ -18,8 +18,6 @@ class MockDisablerTest extends TestCase
 
     /**
      * Tests disabling the mock.
-     *
-     * @test
      */
     public function testEndTest()
     {

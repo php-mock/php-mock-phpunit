@@ -27,8 +27,6 @@ class MockObjectProxyTest extends TestCase
 {
     /**
      * Tests expects()
-     *
-     * @test
      */
     public function testExpects()
     {
@@ -114,7 +112,6 @@ class MockObjectProxyTest extends TestCase
      * But it was used within PHPUnit as it would be. Unfortunately the
      * mocking framework Prophecy will not allow to mock this method.
      *
-     * @test
      * @requires PHPUnit 5
      */
     public function testHasMatcher()
@@ -134,7 +131,6 @@ class MockObjectProxyTest extends TestCase
      * @param string $method    The proxy method.
      * @param array  $arguments The optional arguments.
      *
-     * @test
      * @dataProvider provideTestProxiedMethods
      */
     public function testProxiedMethods($method, array $arguments = [], $expected = null)
