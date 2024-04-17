@@ -23,6 +23,7 @@ jobs:
           - '7.1'
           - '7.0'
         phpunit-version:
+          - '11.1.0'
           - '11.0.0'
           - '10.5.0'
           - '10.4.0'
@@ -150,6 +151,8 @@ jobs:
 
           # PHP 8.1 Exclusions
           - php-version: '8.1'
+            phpunit-version: '11.1.0'
+          - php-version: '8.1'
             phpunit-version: '11.0.0'
           - php-version: '8.1'
             phpunit-version: '9.4.0'
@@ -197,6 +200,8 @@ jobs:
             phpunit-version: '6.0.0'
 
           # PHP 8.0 Exclusions
+          - php-version: '8.0'
+            phpunit-version: '11.1.0'
           - php-version: '8.0'
             phpunit-version: '11.0.0'
           - php-version: '8.0'
@@ -254,6 +259,8 @@ jobs:
             
           # PHP 7.4 Exclusions
           - php-version: '7.4'
+            phpunit-version: '11.1.0'
+          - php-version: '7.4'
             phpunit-version: '11.0.0'
           - php-version: '7.4'
             phpunit-version: '10.5.0'
@@ -296,6 +303,8 @@ jobs:
 
           # PHP 7.3 Exclusions
           - php-version: '7.3'
+            phpunit-version: '11.1.0'
+          - php-version: '7.3'
             phpunit-version: '11.0.0'
           - php-version: '7.3'
             phpunit-version: '10.5.0'
@@ -311,6 +320,8 @@ jobs:
             phpunit-version: '10.0.0'
           
           # PHP 7.2 Exclusions
+          - php-version: '7.2'
+            phpunit-version: '11.1.0'
           - php-version: '7.2'
             phpunit-version: '11.0.0'
           - php-version: '7.2'
@@ -341,6 +352,8 @@ jobs:
             phpunit-version: '9.0.0'
           
           # PHP 7.1 Exclusions
+          - php-version: '7.1'
+            phpunit-version: '11.1.0'
           - php-version: '7.1'
             phpunit-version: '11.0.0'
           - php-version: '7.1'
@@ -383,6 +396,8 @@ jobs:
             phpunit-version: '8.0.0'
       
           # PHP 7.0 Exclusions
+          - php-version: '7.0'
+            phpunit-version: '11.1.0'
           - php-version: '7.0'
             phpunit-version: '11.0.0'
           - php-version: '7.0'
