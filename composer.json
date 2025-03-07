@@ -19,7 +19,7 @@
     },
     "require": {
         "php": ">=7",
-        "phpunit/phpunit": "^6 || ^7 || ^8 || ^9 || ^10.0.17 || ^11",
+        "phpunit/phpunit": "^6 || ^7 || ^8 || ^9 || ^10.0.17 || ^11 || ^12",
         "php-mock/php-mock-integration": "^2.3"
     },
     "require-dev": {
