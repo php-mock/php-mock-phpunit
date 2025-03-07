@@ -67,7 +67,9 @@ trait PHPMock
 
         $builder = $this->getMockBuilder($delegateBuilder->getFullyQualifiedClassName());
         if (is_callable([$builder, 'onlyMethods'])) {
-            $builder->onlyMethods(['delegate', $name]);
+            $builder->onlyMethods([MockDelegateFunctionBuilder::METHOD, $name]);
+        } elseif (is_callable([$builder, 'setMethods'])) {
+            $builder->setMethods([MockDelegateFunctionBuilder::METHOD, $name]);
         }
         $mock = $builder->getMock();
         $this->addMatcher($mock, $name);
