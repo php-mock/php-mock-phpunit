@@ -199,8 +199,9 @@ trait PHPMock
         }
 
         $mockMethodClasses = [
-            'PHPUnit\\Framework\\MockObject\\Generator\\MockMethod',
-            'PHPUnit\\Framework\\MockObject\\MockMethod',
+            'PHPUnit\\Framework\\MockObject\\Generator\\DoubledMethod', // PHPUnit 12
+            'PHPUnit\\Framework\\MockObject\\Generator\\MockMethod',    // PHPUnit 10-11
+            'PHPUnit\\Framework\\MockObject\\MockMethod',               // PHPUnit 9
         ];
 
         foreach ($mockMethodClasses as $mockMethodClass) {
