@@ -66,10 +66,12 @@ trait PHPMock
         $delegateBuilder->build($name);
 
         $builder = $this->getMockBuilder($delegateBuilder->getFullyQualifiedClassName());
-        if (is_callable([$builder, 'addMethods'])) {
-            $builder->addMethods([$name]);
+        if (is_callable([$builder, 'onlyMethods'])) {
+            $builder->onlyMethods([MockDelegateFunctionBuilder::METHOD, $name]);
+        } elseif (is_callable([$builder, 'setMethods'])) {
+            $builder->setMethods([MockDelegateFunctionBuilder::METHOD, $name]);
         }
-        $mock = $builder->getMockForAbstractClass();
+        $mock = $builder->getMock();
         $this->addMatcher($mock, $name);
 
         $functionMockBuilder = new MockBuilder();
@@ -199,8 +201,9 @@ trait PHPMock
         }
 
         $mockMethodClasses = [
-            'PHPUnit\\Framework\\MockObject\\Generator\\MockMethod',
-            'PHPUnit\\Framework\\MockObject\\MockMethod',
+            'PHPUnit\\Framework\\MockObject\\Generator\\DoubledMethod', // PHPUnit 12
+            'PHPUnit\\Framework\\MockObject\\Generator\\MockMethod',    // PHPUnit 10-11
+            'PHPUnit\\Framework\\MockObject\\MockMethod',               // PHPUnit 9
         ];
 
         foreach ($mockMethodClasses as $mockMethodClass) {

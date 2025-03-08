@@ -4,6 +4,7 @@ namespace phpmock\phpunit;
 
 use Mockery;
 use phpmock\integration\MockDelegateFunctionBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
 use PHPUnit\Framework\MockObject\ConfigurableMethod;
 use PHPUnit\Framework\MockObject\InvocationHandler;
@@ -137,6 +138,7 @@ class MockObjectProxyTest extends TestCase
      * @test
      * @dataProvider provideTestProxiedMethods
      */
+    #[DataProvider('provideTestProxiedMethods')]
     public function testProxiedMethods($method, array $arguments = [], $expected = null)
     {
         $mock = Mockery::mock(MockObject::class);
