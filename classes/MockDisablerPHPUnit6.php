@@ -2,6 +2,7 @@
 
 namespace phpmock\phpunit;
 
+use Closure;
 use phpmock\Deactivatable;
 use PHPUnit\Framework\BaseTestListener;
 use PHPUnit\Framework\Test;
@@ -24,7 +25,7 @@ class MockDisablerPHPUnit6 extends BaseTestListener
     private $deactivatable;
 
     /**
-     * @var callable|null The callback to execute after the test.
+     * @var Closure|null The callback to execute after the test.
      */
     private $callback;
     
@@ -32,9 +33,9 @@ class MockDisablerPHPUnit6 extends BaseTestListener
      * Sets the function mocks.
      *
      * @param Deactivatable $deactivatable The function mocks.
-     * @param callable|null $callback      The callback to execute after the test.
+     * @param Closure|null $callback       The callback to execute after the test.
      */
-    public function __construct(Deactivatable $deactivatable, callable $callback = null)
+    public function __construct(Deactivatable $deactivatable, Closure $callback = null)
     {
         $this->deactivatable = $deactivatable;
         $this->callback = $callback;
@@ -54,7 +55,7 @@ class MockDisablerPHPUnit6 extends BaseTestListener
         
         $this->deactivatable->disable();
         if ($this->callback !== null) {
-            call_user_func($this->callback, $this);
+            ($this->callback)($this);
         }
     }
 }
