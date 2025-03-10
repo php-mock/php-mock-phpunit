@@ -2,6 +2,7 @@
 
 namespace phpmock\phpunit;
 
+use phpmock\Deactivatable;
 use phpmock\Mock;
 use PHPUnit\Framework\TestCase;
 
@@ -31,5 +32,23 @@ class MockDisablerTest extends TestCase
         $disabler->endTest($this, 1);
         
         $this->assertEquals(1, min(1, 9));
+    }
+
+    public function testCallback()
+    {
+        $executed = false;
+        $executedWith = null;
+        $mock = $this->createMock(Deactivatable::class);
+        $disabler = new MockDisabler($mock, static function ($disabler) use (&$executed, &$executedWith) {
+            self::assertInstanceOf(MockDisabler::class, $disabler);
+
+            $executed = true;
+            $executedWith = $disabler;
+        });
+
+        $disabler->endTest($this, 1);
+
+        self::assertTrue($executed);
+        self::assertSame($executedWith, $disabler);
     }
 }

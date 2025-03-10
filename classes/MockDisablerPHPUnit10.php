@@ -22,15 +22,22 @@ class MockDisablerPHPUnit10 implements FinishedSubscriber
      * @var Deactivatable The function mocks.
      */
     private $deactivatable;
+
+    /**
+     * @var callable|null The callback to execute after the test.
+     */
+    private $callback;
     
     /**
      * Sets the function mocks.
      *
      * @param Deactivatable $deactivatable The function mocks.
+     * @param callback|null $callback      The callback to execute after the test.
      */
-    public function __construct(Deactivatable $deactivatable)
+    public function __construct(Deactivatable $deactivatable, ?callable $callback = null)
     {
         $this->deactivatable = $deactivatable;
+        $this->callback = $callback;
     }
 
     /**
@@ -39,10 +46,16 @@ class MockDisablerPHPUnit10 implements FinishedSubscriber
     public function notify(Finished $event) : void
     {
         $this->deactivatable->disable();
+        if ($this->callback !== null) {
+            call_user_func($this->callback, $this);
+        }
     }
 
     public function endTest(): void
     {
         $this->deactivatable->disable();
+        if ($this->callback !== null) {
+            call_user_func($this->callback, $this);
+        }
     }
 }

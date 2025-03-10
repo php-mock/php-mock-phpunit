@@ -3,6 +3,7 @@
 namespace phpmock\phpunit;
 
 use phpmock\AbstractMockTestCase;
+use phpmock\Deactivatable;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
@@ -62,5 +63,64 @@ class PHPMockTest extends AbstractMockTestCase
         } catch (ExpectationFailedException $e) {
             time(); // satisfy the expectation
         }
+    }
+
+    /**
+     * Register a Deactivatable for a tear down.
+     *
+     * @test
+     */
+    public function testRegisterForTearDownRegistered()
+    {
+        $obj = new \stdClass();
+        $obj->count = 0;
+
+        $class = new class ($obj) implements Deactivatable
+        {
+            private $obj;
+
+            public function __construct($obj)
+            {
+                $this->obj = $obj;
+            }
+
+            public function disable()
+            {
+                ++$this->obj->count;
+            }
+        };
+        $this->registerForTearDown($class);
+
+        self::assertSame(0, $obj->count);
+
+        return $obj;
+    }
+
+    /**
+     * Check the Deactivatable was executed on a tear down of dependent test.
+     *
+     * @test
+     *
+     * @depends testRegisterForTearDownRegistered
+     */
+    #[\PHPUnit\Framework\Attributes\Depends('testRegisterForTearDownRegistered')]
+    public function testRegisterForTearDownExecuted($obj)
+    {
+        self::assertSame(1, $obj->count);
+
+        return $obj;
+    }
+
+    /**
+     * Check the Deactivatable was unregistered after executing, so it is not executed again.
+     *
+     * @test
+     *
+     * @depends testRegisterForTearDownExecuted
+     */
+    #[\PHPUnit\Framework\Attributes\Depends('testRegisterForTearDownExecuted')]
+    public function testRegisterForTearDownRemoved($obj)
+    {
+        self::assertSame(1, $obj->count);
     }
 }

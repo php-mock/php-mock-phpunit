@@ -22,15 +22,22 @@ class MockDisablerPHPUnit7 extends BaseTestListener
      * @var Deactivatable The function mocks.
      */
     private $deactivatable;
+
+    /**
+     * @var callable|null The callback to execute after the test.
+     */
+    private $callback;
     
     /**
      * Sets the function mocks.
      *
      * @param Deactivatable $deactivatable The function mocks.
+     * @param callable|null $callback      The callback to execute after the test.
      */
-    public function __construct(Deactivatable $deactivatable)
+    public function __construct(Deactivatable $deactivatable, $callback = null)
     {
         $this->deactivatable = $deactivatable;
+        $this->callback = $callback;
     }
     
     /**
@@ -46,5 +53,8 @@ class MockDisablerPHPUnit7 extends BaseTestListener
         parent::endTest($test, $time);
         
         $this->deactivatable->disable();
+        if ($this->callback !== null) {
+            call_user_func($this->callback, $this);
+        }
     }
 }
