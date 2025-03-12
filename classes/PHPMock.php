@@ -7,8 +7,10 @@ use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
+use PHPUnit\Event\Test\Finished;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionProperty;
 use SebastianBergmann\Template\Template;
 
@@ -117,8 +119,32 @@ trait PHPMock
             $property->setAccessible(true);
             $property->setValue($facade, false);
 
+            $method = new ReflectionMethod($facade, 'deferredDispatcher');
+            $method->setAccessible(true);
+            $dispatcher = $method->invoke($facade);
+
+            $propDispatcher = new ReflectionProperty($dispatcher, 'dispatcher');
+            $propDispatcher->setAccessible(true);
+            $directDispatcher = $propDispatcher->getValue($dispatcher);
+
+            $propSubscribers = new ReflectionProperty($directDispatcher, 'subscribers');
+            $propSubscribers->setAccessible(true);
+
             $facade->registerSubscriber(
-                new MockDisabler($deactivatable)
+                new MockDisabler(
+                    $deactivatable,
+                    static function (MockDisabler $original) use ($directDispatcher, $propSubscribers) {
+                        $subscribers = $propSubscribers->getValue($directDispatcher);
+
+                        foreach ($subscribers[Finished::class] as $key => $subscriber) {
+                            if ($original === $subscriber) {
+                                unset($subscribers[Finished::class][$key]);
+                            }
+                        }
+
+                        $propSubscribers->setValue($directDispatcher, $subscribers);
+                    }
+                )
             );
 
             $property->setValue($facade, true);
@@ -127,7 +153,9 @@ trait PHPMock
         }
 
         $result = $this->getTestResultObject();
-        $result->addListener(new MockDisabler($deactivatable));
+        $result->addListener(new MockDisabler($deactivatable, static function (MockDisabler $listener) use ($result) {
+            $result->removeListener($listener);
+        }));
     }
 
     /**
