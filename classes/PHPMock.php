@@ -7,6 +7,7 @@ use phpmock\integration\MockDelegateFunctionBuilder;
 use phpmock\MockBuilder;
 use phpmock\Deactivatable;
 use PHPUnit\Event\Facade;
+use PHPUnit\Event\Test\Finished;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use ReflectionMethod;
@@ -135,9 +136,9 @@ trait PHPMock
                     static function (MockDisabler $original) use ($directDispatcher, $propSubscribers) {
                         $subscribers = $propSubscribers->getValue($directDispatcher);
 
-                        foreach ($subscribers['PHPUnit\Event\Test\Finished'] as $key => $subscriber) {
+                        foreach ($subscribers[Finished::class] as $key => $subscriber) {
                             if ($original === $subscriber) {
-                                unset($subscribers['PHPUnit\Event\Test\Finished'][$key]);
+                                unset($subscribers[Finished::class][$key]);
                             }
                         }
 
