@@ -4,8 +4,8 @@ namespace phpmock\phpunit;
 
 use phpmock\integration\MockDelegateFunctionBuilder;
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\MockObject\Builder\InvocationMocker as BuilderInvocationMocker;
-use PHPUnit\Framework\MockObject\Builder\InvocationStubber;
+use PHPUnit\Framework\MockObject\InvocationStubberImplementation as BuilderInvocationMocker;
+use PHPUnit\Framework\MockObject\InvocationStubber;
 use PHPUnit\Framework\MockObject\InvocationHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
