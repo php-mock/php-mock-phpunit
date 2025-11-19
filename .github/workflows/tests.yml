@@ -704,4 +704,4 @@ jobs:
         run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress
 
       - name: PHPUnit
-        run: vendor/bin/phpunit --display-deprecations
+        run: vendor/bin/phpunit
