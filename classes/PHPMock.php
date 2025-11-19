@@ -116,19 +116,19 @@ trait PHPMock
             $facade = Facade::instance();
 
             $property = new ReflectionProperty(Facade::class, 'sealed');
-            $property->setAccessible(true);
+            ReflectionHelper::setAccessible($property);
             $property->setValue($facade, false);
 
             $method = new ReflectionMethod($facade, 'deferredDispatcher');
-            $method->setAccessible(true);
+            ReflectionHelper::setAccessible($method);
             $dispatcher = $method->invoke($facade);
 
             $propDispatcher = new ReflectionProperty($dispatcher, 'dispatcher');
-            $propDispatcher->setAccessible(true);
+            ReflectionHelper::setAccessible($propDispatcher);
             $directDispatcher = $propDispatcher->getValue($dispatcher);
 
             $propSubscribers = new ReflectionProperty($directDispatcher, 'subscribers');
-            $propSubscribers->setAccessible(true);
+            ReflectionHelper::setAccessible($propSubscribers);
 
             $facade->registerSubscriber(
                 new MockDisabler(
@@ -239,7 +239,7 @@ trait PHPMock
                 $reflection = new ReflectionClass($mockMethodClass);
 
                 $reflectionTemplates = $reflection->getProperty('templates');
-                $reflectionTemplates->setAccessible(true);
+                ReflectionHelper::setAccessible($reflectionTemplates);
 
                 $reflectionTemplates->setValue(null, $templates);
 
