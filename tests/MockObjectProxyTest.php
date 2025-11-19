@@ -91,7 +91,7 @@ class MockObjectProxyTest extends TestCase
         ) {
             $reflection = new \ReflectionClass(InvocationMocker::class);
             $property = $reflection->getProperty('matcher');
-            $property->setAccessible(true);
+            ReflectionHelper::setAccessible($property);
             return $property->getValue($invocationMocker)->methodNameRule();
         }
 
@@ -100,7 +100,7 @@ class MockObjectProxyTest extends TestCase
         ) {
             $reflection = new \ReflectionClass(InvocationMocker::class);
             $property = $reflection->getProperty('matcher');
-            $property->setAccessible(true);
+            ReflectionHelper::setAccessible($property);
             return $property->getValue($invocationMocker)->getMethodNameRule();
         }
 

@@ -98,13 +98,13 @@ class DefaultArgumentRemoverReturnTypes100 extends InvocationOrder
         $reflection = new ReflectionClass($invocation);
 
         $reflectionReturnType = $reflection->getProperty('returnType');
-        $reflectionReturnType->setAccessible(true);
+        ReflectionHelper::setAccessible($reflectionReturnType);
 
         $reflectionIsOptional = $reflection->getProperty('isReturnTypeNullable');
-        $reflectionIsOptional->setAccessible(true);
+        ReflectionHelper::setAccessible($reflectionIsOptional);
 
         $reflectionIsProxied = $reflection->getProperty('proxiedCall');
-        $reflectionIsProxied->setAccessible(true);
+        ReflectionHelper::setAccessible($reflectionIsProxied);
 
         $returnType = $reflectionReturnType->getValue($invocation);
         $proxiedCall = $reflectionIsProxied->getValue($invocation);

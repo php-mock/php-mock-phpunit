@@ -98,10 +98,10 @@ class DefaultArgumentRemoverReturnTypes120 extends InvocationOrder
         $reflection = new ReflectionClass($invocation);
 
         $reflectionReturnType = $reflection->getProperty('returnType');
-        $reflectionReturnType->setAccessible(true);
+        ReflectionHelper::setAccessible($reflectionReturnType);
 
         $reflectionIsOptional = $reflection->getProperty('isReturnTypeNullable');
-        $reflectionIsOptional->setAccessible(true);
+        ReflectionHelper::setAccessible($reflectionIsOptional);
 
         $returnType = $reflectionReturnType->getValue($invocation);
 
