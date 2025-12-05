@@ -33,7 +33,9 @@ class MockObjectProxyTest extends TestCase
      */
     public function testExpects()
     {
-        $matcher = $this->createStub(Invocation::class);
+        $matcher = method_exists($this, 'createStub')
+            ? $this->createStub(Invocation::class)
+            : $this->createMock(Invocation::class);
 
         if (class_exists(ConfigurableMethod::class)) {
             if (class_exists(\PHPUnit\Runner\Version::class)

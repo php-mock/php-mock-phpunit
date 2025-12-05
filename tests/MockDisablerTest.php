@@ -38,7 +38,11 @@ class MockDisablerTest extends TestCase
     {
         $executed = false;
         $executedWith = null;
-        $mock = $this->createStub(Deactivatable::class);
+
+        $mock = method_exists($this, 'createStub')
+            ? $this->createStub(Deactivatable::class)
+            : $this->createMock(Deactivatable::class);
+
         $disabler = new MockDisabler($mock, static function ($disabler) use (&$executed, &$executedWith) {
             self::assertInstanceOf(MockDisabler::class, $disabler);
 
