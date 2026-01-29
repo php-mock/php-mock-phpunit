@@ -718,7 +718,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
 
       - name: Install Dependencies
-        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress
+        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress --no-security-blocking
 
       - name: PHPUnit
         run: vendor/bin/phpunit
