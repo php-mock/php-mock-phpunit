@@ -716,9 +716,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+        env:
+          COMPOSER_NO_SECURITY_BLOCKING: 1
 
       - name: Install Dependencies
-        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress --no-security-blocking
+        run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress
 
       - name: PHPUnit
         run: vendor/bin/phpunit
