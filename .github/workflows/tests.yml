@@ -719,6 +719,8 @@ jobs:
 
       - name: Install Dependencies
         run: composer require phpunit/phpunit:~${{ matrix.phpunit-version }} --no-interaction --no-progress
+        env:
+          COMPOSER_NO_SECURITY_BLOCKING: 1
 
       - name: PHPUnit
         run: vendor/bin/phpunit
