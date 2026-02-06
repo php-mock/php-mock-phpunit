@@ -29,7 +29,12 @@ if (! interface_exists(\PHPUnit\Framework\MockObject\MockObject::class)) {
 }
 
 if (! class_exists(\PHPUnit\Framework\MockObject\Builder\InvocationMocker::class)) {
-    if (class_exists(\PHPUnit\Framework\MockObject\InvocationStubberImplementation::class)) {
+    if (interface_exists(\PHPUnit\Framework\MockObject\InvocationMocker::class)) {
+        class_alias(
+            \PHPUnit\Framework\MockObject\InvocationMocker::class,
+            \PHPUnit\Framework\MockObject\Builder\InvocationMocker::class
+        );
+    } elseif (class_exists(\PHPUnit\Framework\MockObject\InvocationStubberImplementation::class)) {
         class_alias(
             \PHPUnit\Framework\MockObject\InvocationStubberImplementation::class,
             \PHPUnit\Framework\MockObject\Builder\InvocationMocker::class

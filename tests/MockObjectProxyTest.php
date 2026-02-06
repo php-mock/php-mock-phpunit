@@ -91,7 +91,7 @@ class MockObjectProxyTest extends TestCase
         if ($hasVersion
             && version_compare(\PHPUnit\Runner\Version::id(), '10.0.0') >= 0
         ) {
-            $reflection = new \ReflectionClass(InvocationMocker::class);
+            $reflection = new \ReflectionObject($invocationMocker);
             $property = $reflection->getProperty('matcher');
             ReflectionHelper::setAccessible($property);
             return $property->getValue($invocationMocker)->methodNameRule();
