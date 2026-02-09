@@ -60,7 +60,7 @@ class MockObjectProxyTest extends TestCase
         if (class_exists(\PHPUnit\Runner\Version::class)
             && version_compare(\PHPUnit\Runner\Version::id(), '8.4.0') >= 0
         ) {
-            $invocationHandler = new InvocationHandler([$methods], false);
+            $invocationHandler = new InvocationHandler([$methods], false, true);
             $invocationMocker = $invocationHandler->expects($matcher);
         } else {
             $invocationMocker = new InvocationMocker(
