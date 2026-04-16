@@ -172,7 +172,13 @@ class MockObjectProxyTest extends TestCase
         if (class_exists(\PHPUnit\Runner\Version::class)
             && version_compare(\PHPUnit\Runner\Version::id(), '8.4.0') >= 0
         ) {
-            $return[] = ['__phpunit_getInvocationHandler', [], new InvocationHandler([], false)];
+            $return[] = [
+                '__phpunit_getInvocationHandler',
+                [],
+                version_compare(\PHPUnit\Runner\Version::id(), '13.1.0') >= 0
+                    ? new InvocationHandler([], '', false)
+                    : new InvocationHandler([], false)
+            ];
         } else {
             $return[] = [
                 '__phpunit_getInvocationMocker',
