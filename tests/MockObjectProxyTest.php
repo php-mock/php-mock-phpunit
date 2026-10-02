@@ -191,6 +191,16 @@ class MockObjectProxyTest extends TestCase
 
         $return[] = ['__phpunit_setOriginalObject', [new \stdClass()]];
         $return[] = ['__phpunit_verify', [true]];
+
+        if (class_exists(\PHPUnit\Runner\Version::class)
+            && version_compare(\PHPUnit\Runner\Version::id(), '13.4.0') >= 0
+        ) {
+            $return[] = [
+                'recordInvocationsIn',
+                [Mockery::mock(\PHPUnit\Framework\MockObject\InvocationJournal::class), 'label', ['foo' => 'bar']]
+            ];
+        }
+
         return $return;
     }
 }
