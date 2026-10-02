@@ -102,6 +102,11 @@ if ($hasVersion
 }
 
 if ($hasVersion
+    && version_compare(\PHPUnit\Runner\Version::id(), '13.4.0') >= 0
+) {
+    class_alias(\phpmock\phpunit\DefaultArgumentRemoverReturnTypes120::class, \phpmock\phpunit\DefaultArgumentRemover::class);
+    class_alias(\phpmock\phpunit\MockObjectProxyReturnTypes134::class, \phpmock\phpunit\MockObjectProxy::class);
+} elseif ($hasVersion
     && version_compare(\PHPUnit\Runner\Version::id(), '12.0.0') >= 0
 ) {
     class_alias(\phpmock\phpunit\DefaultArgumentRemoverReturnTypes120::class, \phpmock\phpunit\DefaultArgumentRemover::class);
